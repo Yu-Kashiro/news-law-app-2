@@ -1,7 +1,7 @@
 import { sql } from "drizzle-orm";
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
-export const news = sqliteTable("news", {
+export const newsItems = sqliteTable("news_items", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   articleId: text("article_id").notNull().unique(),
   title: text("title").notNull(),

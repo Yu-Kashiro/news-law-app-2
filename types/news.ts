@@ -1,4 +1,4 @@
-import type { news } from "@/db/schemas/news";
+import type { newsItems } from "@/db/schemas/news";
 
-/** newsテーブルから取得したレコードの型 */
-export type News = typeof news.$inferSelect;
+/** news_itemsテーブルから取得したレコードの型 */
+export type NewsItem = typeof newsItems.$inferSelect;
