@@ -42,3 +42,6 @@ next-env.d.ts
 
 # DB
 db/local/
+
+# Claude Code
+.claude/settings.local.json
