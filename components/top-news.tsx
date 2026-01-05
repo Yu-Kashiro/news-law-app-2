@@ -15,7 +15,7 @@ export function TopNews({ news }: { news: NewsItem }) {
             法律に関連する最新のニュースをお届けします。
           </p>
           <div className="mt-16 lg:mt-20">
-            <article className="relative isolate flex flex-col gap-8 lg:flex-row">
+            <article className="group relative isolate flex flex-col gap-8 lg:flex-row">
               <div className="relative lg:w-80 lg:shrink-0 overflow-hidden rounded-2xl bg-muted">
                 {news.ogImage ? (
                   <Image
@@ -39,7 +39,7 @@ export function TopNews({ news }: { news: NewsItem }) {
                     {formatDateJa(news.publishedAt)}
                   </time>
                 </div>
-                <div className="group relative max-w-xl">
+                <div className="max-w-xl">
                   <h3 className="mt-3 text-lg/6 font-semibold text-foreground group-hover:text-muted-foreground">
                     <Link
                       href={news.link}
