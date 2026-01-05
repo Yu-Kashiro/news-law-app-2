@@ -2,17 +2,11 @@ import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { newsItems } from "@/db/schemas/news";
 import { inArray } from "drizzle-orm";
+import type { RssItem } from "@/types/news";
 
 export const maxDuration = 30;
 
 const NHK_RSS_URL = "https://www.nhk.or.jp/rss/news/cat0.xml";
-
-interface RssItem {
-  title: string;
-  link: string;
-  description: string;
-  pubDate: string;
-}
 
 function extractArticleId(link: string): string | null {
   // URLパターン: https://news.web.nhk/newsweb/na/na-k10015018501000
