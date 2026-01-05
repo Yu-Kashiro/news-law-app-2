@@ -138,21 +138,24 @@ export async function GET(request: Request) {
       newItems.map((item) => fetchOgImageUrl(item.link))
     );
 
-    // DB に挿入
-    for (let i = 0; i < newItems.length; i++) {
-      const item = newItems[i];
-      const ogImageResult = ogImageResults[i];
-      const ogImage =
-        ogImageResult.status === "fulfilled" ? ogImageResult.value : null;
+    // DB に挿入（バルクインサート）
+    if (newItems.length > 0) {
+      const insertValues = newItems.map((item, i) => {
+        const ogImageResult = ogImageResults[i];
+        const ogImage =
+          ogImageResult.status === "fulfilled" ? ogImageResult.value : null;
 
-      await db.insert(newsItems).values({
-        articleId: item.articleId,
-        title: item.title,
-        description: item.description,
-        link: item.link,
-        ogImage,
-        publishedAt: new Date(item.pubDate),
+        return {
+          articleId: item.articleId,
+          title: item.title,
+          description: item.description,
+          link: item.link,
+          ogImage,
+          publishedAt: new Date(item.pubDate),
+        };
       });
+
+      await db.insert(newsItems).values(insertValues);
     }
 
     return NextResponse.json({
