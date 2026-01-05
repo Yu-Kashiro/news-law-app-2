@@ -163,8 +163,8 @@ function Logo({ className }: { className?: string }) {
           y2="160.5"
           gradientUnits="userSpaceOnUse"
         >
-          <stop className="[stop-color:hsl(var(--background))]" />
-          <stop offset="1" className="[stop-color:hsl(var(--background))]" stopOpacity="0" />
+          <stop className="[stop-color:var(--background)]" />
+          <stop offset="1" className="[stop-color:var(--background)]" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1"
@@ -174,8 +174,8 @@ function Logo({ className }: { className?: string }) {
           y2="106.875"
           gradientUnits="userSpaceOnUse"
         >
-          <stop className="[stop-color:hsl(var(--background))]" />
-          <stop offset="1" className="[stop-color:hsl(var(--background))]" stopOpacity="0" />
+          <stop className="[stop-color:var(--background)]" />
+          <stop offset="1" className="[stop-color:var(--background)]" stopOpacity="0" />
         </linearGradient>
       </defs>
     </svg>
