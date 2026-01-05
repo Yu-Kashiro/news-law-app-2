@@ -83,13 +83,13 @@ const posts: Post[] = [
 
 export function GridNews() {
   return (
-    <div className="bg-white py-24 sm:py-32">
+    <div className="bg-background py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">
+          <h2 className="text-4xl font-semibold tracking-tight text-balance text-foreground sm:text-5xl">
             From the blog
           </h2>
-          <p className="mt-2 text-lg/8 text-gray-600">
+          <p className="mt-2 text-lg/8 text-muted-foreground">
             Learn how to grow your business with our expert advice.
           </p>
         </div>
@@ -105,30 +105,30 @@ export function GridNews() {
                   src={post.imageUrl}
                   width={800}
                   height={533}
-                  className="aspect-video w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
+                  className="aspect-video w-full rounded-2xl bg-muted object-cover sm:aspect-2/1 lg:aspect-3/2"
                 />
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-border" />
               </div>
               <div className="flex max-w-xl grow flex-col justify-between">
                 <div className="mt-8 flex items-center gap-x-4 text-xs">
-                  <time dateTime={post.datetime} className="text-gray-500">
+                  <time dateTime={post.datetime} className="text-muted-foreground">
                     {post.date}
                   </time>
                   <Link
                     href={post.category.href}
-                    className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                    className="relative z-10 rounded-full bg-muted px-3 py-1.5 font-medium text-muted-foreground hover:bg-accent"
                   >
                     {post.category.title}
                   </Link>
                 </div>
                 <div className="group relative grow">
-                  <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
+                  <h3 className="mt-3 text-lg/6 font-semibold text-foreground group-hover:text-muted-foreground">
                     <Link href={post.href}>
                       <span className="absolute inset-0" />
                       {post.title}
                     </Link>
                   </h3>
-                  <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">
+                  <p className="mt-5 line-clamp-3 text-sm/6 text-muted-foreground">
                     {post.description}
                   </p>
                 </div>
@@ -138,16 +138,16 @@ export function GridNews() {
                     src={post.author.imageUrl}
                     width={40}
                     height={40}
-                    className="size-10 rounded-full bg-gray-100"
+                    className="size-10 rounded-full bg-muted"
                   />
                   <div className="text-sm/6">
-                    <p className="font-semibold text-gray-900">
+                    <p className="font-semibold text-foreground">
                       <Link href={post.author.href}>
                         <span className="absolute inset-0" />
                         {post.author.name}
                       </Link>
                     </p>
-                    <p className="text-gray-600">{post.author.role}</p>
+                    <p className="text-muted-foreground">{post.author.role}</p>
                   </div>
                 </div>
               </div>

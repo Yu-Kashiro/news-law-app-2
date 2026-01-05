@@ -66,21 +66,21 @@ const navigation = [
 
 export function Footer() {
   return (
-    <footer className="bg-white">
+    <footer className="bg-background">
       <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center gap-x-6 md:order-2">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-gray-600 hover:text-gray-800"
+              className="text-muted-foreground hover:text-foreground"
             >
               <span className="sr-only">{item.name}</span>
               <item.icon aria-hidden="true" className="size-6" />
             </Link>
           ))}
         </div>
-        <p className="mt-8 text-center text-sm/6 text-gray-600 md:order-1 md:mt-0">
+        <p className="mt-8 text-center text-sm/6 text-muted-foreground md:order-1 md:mt-0">
           &copy; 2024 Your Company, Inc. All rights reserved.
         </p>
       </div>

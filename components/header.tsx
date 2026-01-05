@@ -9,6 +9,7 @@ import {
   SheetTrigger,
   SheetClose,
 } from '@/components/ui/sheet'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -19,7 +20,7 @@ const navigation = [
 
 export function Header() {
   return (
-    <header className="bg-white">
+    <header className="bg-background">
       <nav
         aria-label="Global"
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
@@ -37,7 +38,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="-m-2.5 text-gray-700"
+                className="-m-2.5 text-foreground"
               >
                 <span className="sr-only">Open main menu</span>
                 <Menu className="size-6" />
@@ -45,7 +46,7 @@ export function Header() {
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="w-full bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+              className="w-full bg-background p-6 sm:max-w-sm sm:ring-1 sm:ring-border"
             >
               <div className="flex items-center justify-between">
                 <Link href="#" className="-m-1.5 p-1.5">
@@ -56,7 +57,7 @@ export function Header() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="-m-2.5 text-gray-700"
+                    className="-m-2.5 text-foreground"
                   >
                     <span className="sr-only">Close menu</span>
                     <X className="size-6" />
@@ -64,28 +65,29 @@ export function Header() {
                 </SheetClose>
               </div>
               <div className="mt-6 flow-root">
-                <div className="-my-6 divide-y divide-gray-500/10">
+                <div className="-my-6 divide-y divide-border">
                   <div className="space-y-2 py-6">
                     {navigation.map((item) => (
                       <SheetClose key={item.name} asChild>
                         <Link
                           href={item.href}
-                          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-foreground hover:bg-accent"
                         >
                           {item.name}
                         </Link>
                       </SheetClose>
                     ))}
                   </div>
-                  <div className="py-6">
+                  <div className="flex items-center justify-between py-6">
                     <SheetClose asChild>
                       <Link
                         href="#"
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-foreground hover:bg-accent"
                       >
                         Log in
                       </Link>
                     </SheetClose>
+                    <ThemeToggle />
                   </div>
                 </div>
               </div>
@@ -98,17 +100,18 @@ export function Header() {
             <Link
               key={item.name}
               href={item.href}
-              className="text-sm/6 font-semibold text-gray-900"
+              className="text-sm/6 font-semibold text-foreground"
             >
               {item.name}
             </Link>
           ))}
         </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:gap-4">
+          <ThemeToggle />
           <Link
             href="#"
-            className="flex items-center gap-1 text-sm/6 font-semibold text-gray-900"
+            className="flex items-center gap-1 text-sm/6 font-semibold text-foreground"
           >
             Log in <ArrowRight className="size-4" />
           </Link>
@@ -127,7 +130,7 @@ function Logo({ className }: { className?: string }) {
       className={className}
     >
       <mask
-        id="mask0_408_134"
+        id="mask0"
         style={{ maskType: "alpha" }}
         maskUnits="userSpaceOnUse"
         x="0"
@@ -137,42 +140,42 @@ function Logo({ className }: { className?: string }) {
       >
         <circle cx="90" cy="90" r="90" fill="black" />
       </mask>
-      <g mask="url(#mask0_408_134)">
-        <circle cx="90" cy="90" r="90" fill="black" />
+      <g mask="url(#mask0)">
+        <circle cx="90" cy="90" r="90" className="fill-foreground" />
         <path
           d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z"
-          fill="url(#paint0_linear_408_134)"
+          fill="url(#paint0)"
         />
         <rect
           x="115"
           y="54"
           width="12"
           height="72"
-          fill="url(#paint1_linear_408_134)"
+          fill="url(#paint1)"
         />
       </g>
       <defs>
         <linearGradient
-          id="paint0_linear_408_134"
+          id="paint0"
           x1="109"
           y1="116.5"
           x2="144.5"
           y2="160.5"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="white" />
-          <stop offset="1" stopColor="white" stopOpacity="0" />
+          <stop className="[stop-color:hsl(var(--background))]" />
+          <stop offset="1" className="[stop-color:hsl(var(--background))]" stopOpacity="0" />
         </linearGradient>
         <linearGradient
-          id="paint1_linear_408_134"
+          id="paint1"
           x1="121"
           y1="54"
           x2="120.799"
           y2="106.875"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="white" />
-          <stop offset="1" stopColor="white" stopOpacity="0" />
+          <stop className="[stop-color:hsl(var(--background))]" />
+          <stop offset="1" className="[stop-color:hsl(var(--background))]" stopOpacity="0" />
         </linearGradient>
       </defs>
     </svg>
