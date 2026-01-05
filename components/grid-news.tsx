@@ -23,8 +23,14 @@ export function GridNews({ news }: { news: NewsItem[] }) {
           {news.map((item) => (
             <article
               key={item.id}
-              className="flex flex-col items-start justify-between"
+              className="group relative flex flex-col items-start justify-between"
             >
+              <Link
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute inset-0 z-10"
+              />
               <div className="relative w-full overflow-hidden rounded-2xl bg-muted">
                 {item.ogImage ? (
                   <Image
@@ -48,16 +54,9 @@ export function GridNews({ news }: { news: NewsItem[] }) {
                     {formatDateJa(item.publishedAt)}
                   </time>
                 </div>
-                <div className="group relative grow">
+                <div className="relative grow">
                   <h3 className="mt-3 text-lg/6 font-semibold text-foreground group-hover:text-muted-foreground">
-                    <Link
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <span className="absolute inset-0" />
-                      {item.title}
-                    </Link>
+                    {item.title}
                   </h3>
                   <p className="mt-5 line-clamp-3 text-sm/6 text-muted-foreground">
                     {item.description}
