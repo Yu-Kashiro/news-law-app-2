@@ -23,7 +23,7 @@ export function TopNews({ news }: { news: NewsItem }) {
                     src={news.ogImage}
                     width={1200}
                     height={630}
-                    className="w-full h-auto rounded-2xl"
+                    className="w-full h-auto rounded-2xl transition-all duration-300 group-hover:opacity-75"
                   />
                 ) : (
                   <div className="aspect-video w-full rounded-2xl bg-muted" />
