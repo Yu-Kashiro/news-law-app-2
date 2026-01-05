@@ -1,11 +1,14 @@
 import { GridNews } from "@/components/grid-news";
 import { TopNews } from "@/components/top-news";
+import { getAllNews } from "@/data/news";
 
-export default function Home() {
+export default async function Home() {
+  const { topNews, gridNews } = await getAllNews();
+
   return (
-    <>
-      <TopNews />
-      <GridNews />
-    </>
+    <div className="flex flex-col gap-16 sm:gap-24">
+      <TopNews news={topNews} />
+      <GridNews news={gridNews} />
+    </div>
   );
 }
