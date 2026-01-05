@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { newsItems } from "@/db/schemas/news";
-import { eq } from "drizzle-orm";
+import { inArray } from "drizzle-orm";
 
 export const maxDuration = 30;
 
@@ -101,31 +101,37 @@ export async function GET(request: Request) {
     const xml = await response.text();
     const items = await parseRss(xml);
 
-    // 新規記事を収集
-    const newItems: (RssItem & { articleId: string })[] = [];
-    let skippedCount = 0;
+    // articleId を抽出してマッピング
+    const itemsWithArticleId = items
+      .map((item) => ({
+        ...item,
+        articleId: extractArticleId(item.link),
+      }))
+      .filter(
+        (item): item is RssItem & { articleId: string } =>
+          item.articleId !== null
+      );
 
-    for (const item of items) {
-      const articleId = extractArticleId(item.link);
+    const skippedNoArticleId = items.length - itemsWithArticleId.length;
 
-      if (!articleId) {
-        skippedCount++;
-        continue;
-      }
+    // 一度のクエリで既存の articleId をすべて取得
+    const articleIds = itemsWithArticleId.map((item) => item.articleId);
+    const existingArticles =
+      articleIds.length > 0
+        ? await db
+            .select({ articleId: newsItems.articleId })
+            .from(newsItems)
+            .where(inArray(newsItems.articleId, articleIds))
+        : [];
 
-      const existing = await db
-        .select({ id: newsItems.id })
-        .from(newsItems)
-        .where(eq(newsItems.articleId, articleId))
-        .limit(1);
+    const existingSet = new Set(existingArticles.map((a) => a.articleId));
 
-      if (existing.length > 0) {
-        skippedCount++;
-        continue;
-      }
+    // 新規記事のみをフィルタリング
+    const newItems = itemsWithArticleId.filter(
+      (item) => !existingSet.has(item.articleId)
+    );
 
-      newItems.push({ ...item, articleId });
-    }
+    const skippedCount = skippedNoArticleId + existingSet.size;
 
     // OG image を並列取得
     const ogImageResults = await Promise.allSettled(
