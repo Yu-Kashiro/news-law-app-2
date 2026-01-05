@@ -123,121 +123,61 @@ export function Header() {
 
 function Logo({ className }: { className?: string }) {
   return (
-    <>
-      {/* Light mode logo */}
-      <svg
-        viewBox="0 0 180 180"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className={`${className} block dark:hidden`}
+    <svg
+      viewBox="0 0 180 180"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <mask
+        id="mask0"
+        style={{ maskType: "alpha" }}
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        width="180"
+        height="180"
       >
-        <mask
-          id="mask0_light"
-          style={{ maskType: "alpha" }}
-          maskUnits="userSpaceOnUse"
-          x="0"
-          y="0"
-          width="180"
-          height="180"
+        <circle cx="90" cy="90" r="90" fill="black" />
+      </mask>
+      <g mask="url(#mask0)">
+        <circle cx="90" cy="90" r="90" className="fill-foreground" />
+        <path
+          d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z"
+          fill="url(#paint0)"
+        />
+        <rect
+          x="115"
+          y="54"
+          width="12"
+          height="72"
+          fill="url(#paint1)"
+        />
+      </g>
+      <defs>
+        <linearGradient
+          id="paint0"
+          x1="109"
+          y1="116.5"
+          x2="144.5"
+          y2="160.5"
+          gradientUnits="userSpaceOnUse"
         >
-          <circle cx="90" cy="90" r="90" fill="black" />
-        </mask>
-        <g mask="url(#mask0_light)">
-          <circle cx="90" cy="90" r="90" fill="black" />
-          <path
-            d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z"
-            fill="url(#paint0_light)"
-          />
-          <rect
-            x="115"
-            y="54"
-            width="12"
-            height="72"
-            fill="url(#paint1_light)"
-          />
-        </g>
-        <defs>
-          <linearGradient
-            id="paint0_light"
-            x1="109"
-            y1="116.5"
-            x2="144.5"
-            y2="160.5"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="white" />
-            <stop offset="1" stopColor="white" stopOpacity="0" />
-          </linearGradient>
-          <linearGradient
-            id="paint1_light"
-            x1="121"
-            y1="54"
-            x2="120.799"
-            y2="106.875"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="white" />
-            <stop offset="1" stopColor="white" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-      </svg>
-      {/* Dark mode logo */}
-      <svg
-        viewBox="0 0 180 180"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className={`${className} hidden dark:block`}
-      >
-        <mask
-          id="mask0_dark"
-          style={{ maskType: "alpha" }}
-          maskUnits="userSpaceOnUse"
-          x="0"
-          y="0"
-          width="180"
-          height="180"
+          <stop className="[stop-color:hsl(var(--background))]" />
+          <stop offset="1" className="[stop-color:hsl(var(--background))]" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient
+          id="paint1"
+          x1="121"
+          y1="54"
+          x2="120.799"
+          y2="106.875"
+          gradientUnits="userSpaceOnUse"
         >
-          <circle cx="90" cy="90" r="90" fill="black" />
-        </mask>
-        <g mask="url(#mask0_dark)">
-          <circle cx="90" cy="90" r="90" fill="white" />
-          <path
-            d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z"
-            fill="url(#paint0_dark)"
-          />
-          <rect
-            x="115"
-            y="54"
-            width="12"
-            height="72"
-            fill="url(#paint1_dark)"
-          />
-        </g>
-        <defs>
-          <linearGradient
-            id="paint0_dark"
-            x1="109"
-            y1="116.5"
-            x2="144.5"
-            y2="160.5"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="black" />
-            <stop offset="1" stopColor="black" stopOpacity="0" />
-          </linearGradient>
-          <linearGradient
-            id="paint1_dark"
-            x1="121"
-            y1="54"
-            x2="120.799"
-            y2="106.875"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="black" />
-            <stop offset="1" stopColor="black" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-      </svg>
-    </>
+          <stop className="[stop-color:hsl(var(--background))]" />
+          <stop offset="1" className="[stop-color:hsl(var(--background))]" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+    </svg>
   )
 }
