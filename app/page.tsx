@@ -7,7 +7,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-16 sm:gap-24">
-      {topNews && <TopNews news={topNews} />}
+      <TopNews news={topNews} />
       <GridNews news={gridNews} />
     </div>
   );

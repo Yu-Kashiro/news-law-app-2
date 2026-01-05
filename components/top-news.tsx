@@ -3,7 +3,11 @@ import Link from "next/link";
 import type { NewsItem } from "@/types/news";
 import { formatDateJa } from "@/lib/utils";
 
-export function TopNews({ news }: { news: NewsItem }) {
+export function TopNews({ news }: { news: NewsItem | null }) {
+  if (!news) {
+    return null;
+  }
+
   return (
     <section className="bg-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
