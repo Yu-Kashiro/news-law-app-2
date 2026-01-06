@@ -17,13 +17,8 @@ type Params = Promise<{ id: string }>;
 
 export default async function NewsDetailPage({ params }: { params: Params }) {
   const { id } = await params;
-  const newsId = parseInt(id, 10);
 
-  if (isNaN(newsId)) {
-    notFound();
-  }
-
-  const news = await getNewsById(newsId);
+  const news = await getNewsById(id);
 
   if (!news) {
     notFound();
@@ -118,7 +113,7 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="h-5 w-5" />
-                  法令コラム
+                  {news.lawColumnTitle ?? "法令コラム"}
                 </CardTitle>
               </CardHeader>
               <CardContent>
