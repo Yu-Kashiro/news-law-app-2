@@ -2,6 +2,7 @@ import "server-only";
 import { generateText, Output } from "ai";
 import { gateway } from "@ai-sdk/gateway";
 import { z } from "zod";
+import type { LawsResponse } from "@/types/news";
 
 const SYSTEM_PROMPT = `あなたは日本法令の専門家・法律ライターです。ニュース記事に関連する法律的なコラムを執筆してください。
 
@@ -36,9 +37,7 @@ const lawsResponseSchema = z.object({
   lawColumn: z
     .string()
     .describe("法律コラム本文（300〜500文字、3〜5段落）"),
-});
-
-export type LawsResponse = z.infer<typeof lawsResponseSchema>;
+}) satisfies z.ZodType<LawsResponse>;
 
 export async function generateLawsForNews(
   title: string,
