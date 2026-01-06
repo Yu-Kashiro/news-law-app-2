@@ -9,6 +9,7 @@ export const newsItems = sqliteTable("news_items", {
   link: text("link").notNull(),
   ogImage: text("og_image"),
   laws: text("laws", { mode: "json" }).$type<string[]>(),
+  lawColumn: text("law_column"),
   keywords: text("keywords", { mode: "json" }).$type<string[]>(),
   publishedAt: integer("published_at", { mode: "timestamp" }).notNull(),
   createdAt: integer("created_at", { mode: "timestamp_ms" })
