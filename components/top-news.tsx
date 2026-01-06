@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ImageOff } from "lucide-react";
 import type { NewsItem } from "@/types/news";
 import { formatDateJa } from "@/lib/utils";
 
@@ -30,7 +31,10 @@ export function TopNews({ news }: { news: NewsItem | null }) {
                     className="w-full h-auto rounded-2xl transition-all duration-300 group-hover:opacity-75"
                   />
                 ) : (
-                  <div className="aspect-video w-full rounded-2xl bg-muted" />
+                  <div className="aspect-video w-full rounded-2xl bg-muted flex items-center justify-center">
+                    <ImageOff className="h-8 w-8 text-muted-foreground" />
+                    <span className="sr-only">画像なし</span>
+                  </div>
                 )}
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-border" />
               </div>

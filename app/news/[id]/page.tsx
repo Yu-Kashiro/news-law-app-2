@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Scale, FileText } from "lucide-react";
+import { ArrowLeft, ExternalLink, Scale, FileText, ImageOff } from "lucide-react";
 import { getNewsById } from "@/data/news";
 import { formatDateJa } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -52,7 +52,12 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
                   className="object-cover rounded-2xl"
                   priority
                 />
-              ) : null}
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <ImageOff className="h-8 w-8 text-muted-foreground" />
+                  <span className="sr-only">画像なし</span>
+                </div>
+              )}
               <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-border" />
             </div>
             <div>
