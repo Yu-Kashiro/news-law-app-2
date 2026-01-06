@@ -17,7 +17,7 @@ export async function getAllNews() {
 }
 
 /** IDで記事を取得 */
-export async function getNewsById(id: number) {
+export async function getNewsById(id: string) {
   const news = await db
     .select()
     .from(newsItems)
