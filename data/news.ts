@@ -21,7 +21,8 @@ export async function getNewsById(id: number) {
   const news = await db
     .select()
     .from(newsItems)
-    .where(eq(newsItems.id, id));
+    .where(eq(newsItems.id, id))
+    .limit(1);
 
   return news[0] ?? null;
 }
