@@ -26,9 +26,7 @@ export function GridNews({ news }: { news: NewsItem[] }) {
               className="group relative flex flex-col items-start justify-between"
             >
               <Link
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/news/${item.id}`}
                 className="absolute inset-0 z-10"
               />
               <div className="relative w-full overflow-hidden rounded-2xl bg-muted">

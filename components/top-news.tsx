@@ -45,11 +45,7 @@ export function TopNews({ news }: { news: NewsItem | null }) {
                 </div>
                 <div className="max-w-xl">
                   <h3 className="mt-3 text-lg/6 font-semibold text-foreground group-hover:text-muted-foreground">
-                    <Link
-                      href={news.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <Link href={`/news/${news.id}`}>
                       <span className="absolute inset-0" />
                       {news.title}
                     </Link>
