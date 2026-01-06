@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { newsItems } from "@/db/schemas/news";
-import { inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import type { RssItem } from "@/types/news";
+import { generateLawsForNews } from "@/lib/ai/generate-laws";
 
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 const NHK_RSS_URL = "https://www.nhk.or.jp/rss/news/cat0.xml";
 
@@ -133,6 +134,7 @@ export async function GET(request: Request) {
     );
 
     // DB に挿入（バルクインサート）
+    const insertedIds: string[] = [];
     if (newItems.length > 0) {
       const insertValues = newItems.map((item, i) => {
         const ogImageResult = ogImageResults[i];
@@ -149,12 +151,41 @@ export async function GET(request: Request) {
         };
       });
 
-      await db.insert(newsItems).values(insertValues);
+      const result = await db.insert(newsItems).values(insertValues).returning({ id: newsItems.id });
+      insertedIds.push(...result.map((r) => r.id));
+    }
+
+    // AI で法令情報を生成してDBを更新
+    // NOTE: 一括UPDATEではなく逐次UPDATEを採用している理由
+    // - AI API は外部依存で不安定になりやすく、途中でエラーやタイムアウトが発生する可能性がある
+    // - 逐次保存なら、失敗した記事以外のデータは既に保存済みとなり、データ損失を最小限に抑えられる
+    // - 一括保存だと、最後のUPDATE前にプロセスがクラッシュした場合、全データが消失するリスクがある
+    let lawsGenerated = 0;
+    for (const item of newItems) {
+      const insertedItem = insertedIds.shift();
+      if (!insertedItem) continue;
+
+      try {
+        const lawsResponse = await generateLawsForNews(item.title, item.description);
+        await db
+          .update(newsItems)
+          .set({
+            laws: lawsResponse.laws,
+            lawColumnTitle: lawsResponse.lawColumnTitle,
+            lawColumn: lawsResponse.lawColumn,
+            updatedAt: new Date(),
+          })
+          .where(eq(newsItems.id, insertedItem));
+        lawsGenerated++;
+      } catch (error) {
+        console.error(`Failed to generate laws for article ${item.articleId}:`, error);
+      }
     }
 
     return NextResponse.json({
       success: true,
       inserted: newItems.length,
+      lawsGenerated,
       skipped: skippedCount,
       total: items.length,
     });
