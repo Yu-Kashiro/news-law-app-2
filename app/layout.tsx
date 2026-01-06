@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <body className="wrap-anywhere">
+      <body className="wrap-anywhere flex min-h-screen flex-col">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -24,7 +24,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="py-16 sm:py-24">{children}</main>
+          <main className="flex-1">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>
