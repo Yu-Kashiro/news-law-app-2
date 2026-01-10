@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { newsItems } from "@/db/schemas/news";
 import { eq, inArray } from "drizzle-orm";
 import type { RssItem } from "@/types/news";
-import { generateLawsForNews } from "@/lib/ai/generate-laws";
+import { generateLawsForNews, ensureLawsExist } from "@/lib/ai/generate-laws";
 
 export const maxDuration = 60;
 
@@ -177,6 +177,11 @@ export async function GET(request: Request) {
           })
           .where(eq(newsItems.id, insertedItem));
         lawsGenerated++;
+
+        // 法令詳細を事前生成してDBに保存
+        if (lawsResponse.laws && lawsResponse.laws.length > 0) {
+          await ensureLawsExist(lawsResponse.laws);
+        }
       } catch (error) {
         console.error(`Failed to generate laws for article ${item.articleId}:`, error);
       }
