@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, Scale, FileText, ImageOff } from "lucide-react";
 import { getNewsById } from "@/data/news";
+import { getLawsByNames } from "@/data/laws";
 import { formatDateJa } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,6 +20,8 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
   const { id } = await params;
 
   const news = await getNewsById(id);
+  const lawRecords = news?.laws ? await getLawsByNames(news.laws) : [];
+  const lawMap = new Map(lawRecords.map((law) => [law.name, law.id]));
 
   if (!news) {
     notFound();
@@ -98,11 +101,18 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {news.laws.map((law) => (
-                    <Badge key={law} variant="secondary">
-                      {law}
-                    </Badge>
-                  ))}
+                  {news.laws.map((law) => {
+                    const lawId = lawMap.get(law);
+                    return lawId ? (
+                      <Badge key={law} variant="secondary" asChild>
+                        <Link href={`/laws/${lawId}?from=${id}`}>{law}</Link>
+                      </Badge>
+                    ) : (
+                      <Badge key={law} variant="secondary">
+                        {law}
+                      </Badge>
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>
