@@ -43,6 +43,13 @@
       "when": 1767674751610,
       "tag": "0005_little_betty_ross",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1767691559942,
+      "tag": "0006_mysterious_hiroim",
+      "breakpoints": true
     }
   ]
 }
