@@ -5,8 +5,6 @@ import {
   ExternalLink,
   Scale,
   BookOpen,
-  ThumbsUp,
-  ThumbsDown,
   History,
   MessageCircle,
 } from "lucide-react";
@@ -18,14 +16,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 type Params = Promise<{ id: string }>;
 type SearchParams = Promise<{ from?: string }>;
@@ -122,74 +112,6 @@ export default async function LawDetailPage({
                       {law.background}
                     </p>
                   </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* この法律の良いところ */}
-            {law.pros && law.pros.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <ThumbsUp className="h-5 w-5" />
-                    この法律の良いところ
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="w-1/3">ポイント</TableHead>
-                        <TableHead>解説</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {law.pros.map((point, index) => (
-                        <TableRow key={index}>
-                          <TableCell className="font-medium">
-                            {point.title}
-                          </TableCell>
-                          <TableCell className="text-muted-foreground">
-                            {point.description}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* 直した方が良いところ */}
-            {law.cons && law.cons.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <ThumbsDown className="h-5 w-5" />
-                    直した方が良いところ
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="w-1/3">ポイント</TableHead>
-                        <TableHead>解説</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {law.cons.map((point, index) => (
-                        <TableRow key={index}>
-                          <TableCell className="font-medium">
-                            {point.title}
-                          </TableCell>
-                          <TableCell className="text-muted-foreground">
-                            {point.description}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
                 </CardContent>
               </Card>
             )}
