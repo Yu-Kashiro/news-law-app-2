@@ -36,6 +36,34 @@
       "when": 1767670153052,
       "tag": "0004_soft_giant_man",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1767674751610,
+      "tag": "0005_little_betty_ross",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1767691559942,
+      "tag": "0006_mysterious_hiroim",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1768103527241,
+      "tag": "0007_milky_mentor",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1768110036655,
+      "tag": "0008_modern_paladin",
+      "breakpoints": true
     }
   ]
 }
