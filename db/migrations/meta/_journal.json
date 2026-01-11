@@ -57,6 +57,13 @@
       "when": 1768103527241,
       "tag": "0007_milky_mentor",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1768110036655,
+      "tag": "0008_modern_paladin",
+      "breakpoints": true
     }
   ]
 }
