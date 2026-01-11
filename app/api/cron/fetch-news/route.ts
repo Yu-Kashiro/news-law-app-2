@@ -75,7 +75,10 @@ export async function GET(request: Request) {
 
   if (!cronSecret) {
     console.error("CRON_SECRET is not configured");
-    return NextResponse.json({ error: "Server misconfiguration" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Server misconfiguration" },
+      { status: 500 }
+    );
   }
 
   if (!authHeader || authHeader !== `Bearer ${cronSecret}`) {
@@ -151,7 +154,10 @@ export async function GET(request: Request) {
         };
       });
 
-      const result = await db.insert(newsItems).values(insertValues).returning({ id: newsItems.id });
+      const result = await db
+        .insert(newsItems)
+        .values(insertValues)
+        .returning({ id: newsItems.id });
       insertedIds.push(...result.map((r) => r.id));
     }
 
@@ -166,24 +172,40 @@ export async function GET(request: Request) {
       if (!insertedItem) continue;
 
       try {
-        const lawsResponse = await generateLawsForNews(item.title, item.description);
+        const lawsResponse = await generateLawsForNews(
+          item.title,
+          item.description
+        );
+
+        // 法令詳細を事前生成してDBに保存し、関連条文も取得
+        let relatedArticles = null;
+        if (lawsResponse.laws && lawsResponse.laws.length > 0) {
+          const result = await ensureLawsExist(lawsResponse.laws, {
+            title: item.title,
+            description: item.description,
+            keywords: lawsResponse.laws, // 法令名をキーワードとして使用
+          });
+          relatedArticles =
+            result.relatedArticles.length > 0 ? result.relatedArticles : null;
+        }
+
         await db
           .update(newsItems)
           .set({
             laws: lawsResponse.laws,
+            relatedLaws: lawsResponse.relatedLaws,
             lawColumnTitle: lawsResponse.lawColumnTitle,
             lawColumn: lawsResponse.lawColumn,
+            relatedArticles,
             updatedAt: new Date(),
           })
           .where(eq(newsItems.id, insertedItem));
         lawsGenerated++;
-
-        // 法令詳細を事前生成してDBに保存
-        if (lawsResponse.laws && lawsResponse.laws.length > 0) {
-          await ensureLawsExist(lawsResponse.laws);
-        }
       } catch (error) {
-        console.error(`Failed to generate laws for article ${item.articleId}:`, error);
+        console.error(
+          `Failed to generate laws for article ${item.articleId}:`,
+          error
+        );
       }
     }
 
