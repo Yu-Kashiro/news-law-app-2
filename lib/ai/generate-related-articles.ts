@@ -16,7 +16,7 @@ function kanjiToArabic(str: string): string {
   };
 
   // 全角数字を半角に変換
-  let result = str.replace(/[０-９]/g, (c) =>
+  const result = str.replace(/[０-９]/g, (c) =>
     String.fromCharCode(c.charCodeAt(0) - 0xfee0)
   );
 
