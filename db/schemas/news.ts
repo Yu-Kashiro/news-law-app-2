@@ -1,4 +1,4 @@
-import { RelatedArticle } from "@/types/laws";
+import { RelatedArticle, RelatedLaw } from "@/types/laws";
 import { sql } from "drizzle-orm";
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 import { nanoid } from "nanoid";
@@ -13,6 +13,7 @@ export const newsItems = sqliteTable("news_items", {
   link: text("link").notNull(),
   ogImage: text("og_image"),
   laws: text("laws", { mode: "json" }).$type<string[]>(),
+  relatedLaws: text("related_laws", { mode: "json" }).$type<RelatedLaw[]>(),
   lawColumnTitle: text("law_column_title"),
   lawColumn: text("law_column"),
   keywords: text("keywords", { mode: "json" }).$type<string[]>(),

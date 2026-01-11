@@ -40,3 +40,9 @@ export type LawArticle = typeof lawArticles.$inferSelect;
 
 /** 条文作成時の入力型 */
 export type LawArticleInsert = typeof lawArticles.$inferInsert;
+
+/** ニュースと関係法令の関連情報 */
+export interface RelatedLaw {
+  lawName: string;
+  relevanceNote: string;  // AIによる関連理由
+}
