@@ -1,4 +1,6 @@
 import type { laws, LawPoint } from "@/db/schemas/laws";
+import type { lawArticles } from "@/db/schemas/law-articles";
+
 
 /** lawsテーブルから取得したレコードの型 */
 export type Law = typeof laws.$inferSelect;
@@ -25,3 +27,16 @@ export interface EGovLawInfo {
   promulgationDate?: string;
   officialUrl: string;
 }
+
+/** ニュースに関連する条文の型 */
+export interface RelatedArticle {
+  lawId: string;
+  articleId: string;
+  relevanceNote: string;  // AIによる関連性の解説
+}
+
+/** law_articlesテーブルから取得したレコードの型 */
+export type LawArticle = typeof lawArticles.$inferSelect;
+
+/** 条文作成時の入力型 */
+export type LawArticleInsert = typeof lawArticles.$inferInsert;
