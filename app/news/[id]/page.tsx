@@ -6,13 +6,13 @@ import { getNewsById } from "@/data/news";
 import { getLawsByNames } from "@/data/laws";
 import { formatDateJa } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { LawCard } from "@/components/law-card";
 
 type Params = Promise<{ id: string }>;
 
@@ -21,7 +21,7 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
 
   const news = await getNewsById(id);
   const lawRecords = news?.laws ? await getLawsByNames(news.laws) : [];
-  const lawMap = new Map(lawRecords.map((law) => [law.name, law.id]));
+  const lawMap = new Map(lawRecords.map((law) => [law.name, law]));
 
   if (!news) {
     notFound();
@@ -92,30 +92,31 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
           </article>
 
           {news.laws && news.laws.length > 0 && (
-            <Card className="mt-8">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Scale className="h-5 w-5" />
-                  関係法令
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {news.laws.map((law) => {
-                    const lawId = lawMap.get(law);
-                    return lawId ? (
-                      <Badge key={law} variant="secondary" asChild>
-                        <Link href={`/laws/${lawId}?from=${id}`}>{law}</Link>
-                      </Badge>
-                    ) : (
-                      <Badge key={law} variant="secondary">
-                        {law}
-                      </Badge>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
+            <section className="mt-8">
+              <h2 className="flex items-center gap-2 text-lg font-semibold mb-4">
+                <Scale className="h-5 w-5" />
+                関係法令
+              </h2>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {news.laws.map((lawName) => {
+                  const law = lawMap.get(lawName);
+                  return law ? (
+                    <LawCard key={lawName} law={law} newsId={id} />
+                  ) : (
+                    <Card key={lawName} className="overflow-hidden">
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-foreground">
+                          {lawName}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          詳細情報を取得中...
+                        </p>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            </section>
           )}
 
           {news.lawColumn && (
