@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ImageOff } from "lucide-react";
 import type { NewsItem } from "@/types/news";
 import { formatDateJa } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 export function TopNews({ news }: { news: NewsItem | null }) {
   if (!news) {
@@ -10,58 +11,61 @@ export function TopNews({ news }: { news: NewsItem | null }) {
   }
 
   return (
-    <section className="bg-background">
+    <section className="bg-background py-8">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:max-w-4xl">
-          <h2 className="text-4xl font-semibold tracking-tight text-pretty text-foreground sm:text-5xl">
-            最新ニュース
-          </h2>
-          <p className="mt-2 text-lg/8 text-muted-foreground">
-            法律に関連する最新のニュースをお届けします。
-          </p>
-          <div className="mt-16 lg:mt-20">
-            <article className="group relative isolate flex flex-col gap-8 lg:flex-row">
-              <div className="relative lg:w-80 lg:shrink-0 overflow-hidden rounded-2xl bg-muted">
-                {news.ogImage ? (
-                  <Image
-                    alt={news.title}
-                    src={news.ogImage}
-                    width={1200}
-                    height={630}
-                    className="w-full h-auto rounded-2xl transition-all duration-300 group-hover:opacity-75"
-                  />
-                ) : (
-                  <div className="aspect-video w-full rounded-2xl bg-muted flex items-center justify-center">
-                    <ImageOff className="h-8 w-8 text-muted-foreground" />
-                    <span className="sr-only">画像なし</span>
-                  </div>
-                )}
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-border" />
-              </div>
-              <div>
-                <div className="flex items-center gap-x-4 text-xs">
-                  <time
-                    dateTime={news.publishedAt.toISOString()}
-                    className="text-muted-foreground"
-                  >
-                    {formatDateJa(news.publishedAt)}
-                  </time>
+        <article className="group relative">
+          <Link href={`/news/${news.id}`} className="absolute inset-0 z-10" />
+          <div className="flex flex-col lg:flex-row lg:justify-center gap-6 lg:gap-8">
+            {/* 左側: テキストコンテンツ */}
+            <div className="flex-1 lg:max-w-md">
+              <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-6">
+                Pick Up
+              </p>
+              <h2 className="text-2xl lg:text-3xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">
+                {news.title}
+              </h2>
+              <p className="mt-4 text-sm text-muted-foreground line-clamp-3">
+                {news.description}
+              </p>
+              <time
+                dateTime={news.publishedAt.toISOString()}
+                className="mt-4 block text-xs text-muted-foreground"
+              >
+                {formatDateJa(news.publishedAt)}
+              </time>
+              {news.laws && news.laws.length > 0 && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {news.laws.map((law) => (
+                    <Badge
+                      key={law}
+                      variant="secondary"
+                      className="max-w-xs block truncate"
+                      title={law}
+                    >
+                      {law}
+                    </Badge>
+                  ))}
                 </div>
-                <div className="max-w-xl">
-                  <h3 className="mt-3 text-lg/6 font-semibold text-foreground group-hover:text-muted-foreground">
-                    <Link href={`/news/${news.id}`}>
-                      <span className="absolute inset-0" />
-                      {news.title}
-                    </Link>
-                  </h3>
-                  <p className="mt-5 text-sm/6 text-muted-foreground">
-                    {news.description}
-                  </p>
+              )}
+            </div>
+            {/* 右側: 画像 */}
+            <div className="relative lg:flex-1 lg:max-w-md aspect-video overflow-hidden rounded-lg bg-muted">
+              {news.ogImage ? (
+                <Image
+                  alt={news.title}
+                  src={news.ogImage}
+                  fill
+                  className="object-contain rounded-lg transition-all duration-300 group-hover:scale-105"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <ImageOff className="h-12 w-12 text-muted-foreground" />
+                  <span className="sr-only">画像なし</span>
                 </div>
-              </div>
-            </article>
+              )}
+            </div>
           </div>
-        </div>
+        </article>
       </div>
     </section>
   );
