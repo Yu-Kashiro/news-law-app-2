@@ -1,45 +1,36 @@
 'use client'
 
 import Link from 'next/link'
-import { Menu, X, ArrowRight } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetClose,
-} from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { ThemeToggle } from '@/components/theme-toggle'
-
-const navigation = [
-  { name: 'Product', href: '#' },
-  { name: 'Features', href: '#' },
-  { name: 'Marketplace', href: '#' },
-  { name: 'Company', href: '#' },
-]
 
 export function Header() {
   return (
     <header className="bg-background">
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="relative mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <Link href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
+          <Link href="/" className="-m-1.5 p-1.5">
+            <span className="sr-only">News and Law</span>
             <Logo className="h-8 w-auto" />
           </Link>
         </div>
 
+        <Link
+          href="/"
+          className="absolute left-1/2 -translate-x-1/2 text-xl font-semibold uppercase tracking-widest text-foreground lg:text-2xl"
+        >
+          News & Law
+        </Link>
+
         <div className="flex lg:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="-m-2.5 text-foreground"
-              >
+              <Button variant="ghost" size="icon" className="-m-2.5 text-foreground">
                 <span className="sr-only">Open main menu</span>
                 <Menu className="size-6" />
               </Button>
@@ -49,72 +40,20 @@ export function Header() {
               className="w-full bg-background p-6 sm:max-w-sm sm:ring-1 sm:ring-border"
             >
               <div className="flex items-center justify-between">
-                <Link href="#" className="-m-1.5 p-1.5">
-                  <span className="sr-only">Your Company</span>
+                <Link href="/" className="-m-1.5 p-1.5">
+                  <span className="sr-only">News and Law</span>
                   <Logo className="h-8 w-auto" />
                 </Link>
-                <SheetClose asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="-m-2.5 text-foreground"
-                  >
-                    <span className="sr-only">Close menu</span>
-                    <X className="size-6" />
-                  </Button>
-                </SheetClose>
               </div>
-              <div className="mt-6 flow-root">
-                <div className="-my-6 divide-y divide-border">
-                  <div className="space-y-2 py-6">
-                    {navigation.map((item) => (
-                      <SheetClose key={item.name} asChild>
-                        <Link
-                          href={item.href}
-                          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-foreground hover:bg-accent"
-                        >
-                          {item.name}
-                        </Link>
-                      </SheetClose>
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between py-6">
-                    <SheetClose asChild>
-                      <Link
-                        href="#"
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-foreground hover:bg-accent"
-                      >
-                        Log in
-                      </Link>
-                    </SheetClose>
-                    <ThemeToggle />
-                  </div>
-                </div>
+              <div className="mt-6 flex justify-end">
+                <ThemeToggle />
               </div>
             </SheetContent>
           </Sheet>
         </div>
 
-        <div className="hidden lg:flex lg:gap-x-12">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-sm/6 font-semibold text-foreground"
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-
-        <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:gap-4">
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <ThemeToggle />
-          <Link
-            href="#"
-            className="flex items-center gap-1 text-sm/6 font-semibold text-foreground"
-          >
-            Log in <ArrowRight className="size-4" />
-          </Link>
         </div>
       </nav>
     </header>
