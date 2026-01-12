@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
+  ArrowRight,
   ExternalLink,
-  Scale,
   FileText,
   ImageOff,
 } from "lucide-react";
@@ -13,10 +13,6 @@ import { getLawsByNames } from "@/data/laws";
 import { formatDateJa } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LawCard } from "@/components/law-card";
-import { getArticlesByLawId } from "@/data/law-articles";
-import { RelatedArticles } from "@/components/related-articles";
-import type { LawArticle } from "@/types/laws";
 
 type Params = Promise<{ id: string }>;
 
@@ -26,16 +22,6 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
   const news = await getNewsById(id);
   const lawRecords = news?.laws ? await getLawsByNames(news.laws) : [];
   const lawMap = new Map(lawRecords.map((law) => [law.name, law]));
-
-  // 関連条文を取得
-  const articleIds = news?.relatedArticles?.map((r) => r.articleId) ?? [];
-  let articles: LawArticle[] = [];
-  if (articleIds.length > 0) {
-    // 各法令から条文を取得
-    const articlePromises = lawRecords.map((law) => getArticlesByLawId(law.id));
-    const articleResults = await Promise.all(articlePromises);
-    articles = articleResults.flat();
-  }
 
   if (!news) {
     notFound();
@@ -107,47 +93,37 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
 
           {news.laws && news.laws.length > 0 && (
             <section className="mt-8">
-              <h2 className="flex items-center gap-2 text-lg font-semibold mb-4">
-                <Scale className="h-5 w-5" />
+              <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-3">
                 関係法令
-              </h2>
-              <div className="grid gap-4 sm:grid-cols-2">
+              </p>
+              <ul className="divide-y divide-border">
                 {news.laws.map((lawName) => {
                   const law = lawMap.get(lawName);
                   const relatedLaw = news.relatedLaws?.find(
                     (r) => r.lawName === lawName
                   );
-                  return law ? (
-                    <LawCard
-                      key={lawName}
-                      law={law}
-                      newsId={id}
-                      relevanceNote={relatedLaw?.relevanceNote}
-                    />
-                  ) : (
-                    <Card key={lawName} className="overflow-hidden">
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-foreground">
+
+                  return (
+                    <li key={lawName}>
+                      <Link
+                        href={law ? `/news/${id}/laws/${law.id}` : "#"}
+                        className="block rounded-lg p-3 -mx-3 hover:bg-muted transition-colors"
+                      >
+                        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
                           {lawName}
-                        </h3>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          詳細情報を取得中...
-                        </p>
-                      </CardContent>
-                    </Card>
+                          <ArrowRight className="h-3 w-3" />
+                        </span>
+                        {relatedLaw?.relevanceNote && (
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            {relatedLaw.relevanceNote}
+                          </p>
+                        )}
+                      </Link>
+                    </li>
                   );
                 })}
-              </div>
+              </ul>
             </section>
-          )}
-
-          {/* 関連条文セクション（法令コラムの上に配置） */}
-          {news.relatedArticles && news.relatedArticles.length > 0 && (
-            <RelatedArticles
-              relatedArticles={news.relatedArticles}
-              articles={articles}
-              laws={lawRecords}
-            />
           )}
 
           {news.lawColumn && (

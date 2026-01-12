@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ImageOff } from "lucide-react";
 import type { NewsItem } from "@/types/news";
 import { formatDateJa } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 export function GridNews({ news }: { news: NewsItem[] }) {
   if (news.length === 0) {
@@ -10,63 +11,64 @@ export function GridNews({ news }: { news: NewsItem[] }) {
   }
 
   return (
-    <section className="bg-background">
+    <section className="bg-background py-8">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-4xl font-semibold tracking-tight text-balance text-foreground sm:text-5xl">
-            その他のニュース
-          </h2>
-          <p className="mt-2 text-lg/8 text-muted-foreground">
-            法律に関連するニュースをお届けします。
+        <div className="mx-auto max-w-4xl">
+          <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-6">
+            Latest News
           </p>
-        </div>
-        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          <div className="divide-y divide-border">
           {news.map((item) => (
-            <article
-              key={item.id}
-              className="group relative flex flex-col items-start justify-between"
-            >
+            <article key={item.id} className="group relative py-4 first:pt-0">
               <Link
                 href={`/news/${item.id}`}
                 className="absolute inset-0 z-10"
               />
-              <div className="relative w-full overflow-hidden rounded-2xl bg-muted">
-                {item.ogImage ? (
-                  <Image
-                    alt={item.title}
-                    src={item.ogImage}
-                    width={1200}
-                    height={630}
-                    className="w-full h-auto rounded-2xl transition-all duration-300 group-hover:opacity-75"
-                  />
-                ) : (
-                  <div className="aspect-video w-full rounded-2xl bg-muted flex items-center justify-center">
-                    <ImageOff className="h-8 w-8 text-muted-foreground" />
-                    <span className="sr-only">画像なし</span>
-                  </div>
-                )}
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-border" />
-              </div>
-              <div className="flex max-w-xl grow flex-col justify-between">
-                <div className="mt-8 flex items-center gap-x-4 text-xs">
+              <div className="flex gap-4">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-semibold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                    {item.title}
+                  </h3>
                   <time
                     dateTime={item.publishedAt.toISOString()}
-                    className="text-muted-foreground"
+                    className="mt-2 block text-xs text-muted-foreground"
                   >
                     {formatDateJa(item.publishedAt)}
                   </time>
+                  {item.laws && item.laws.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      {item.laws.map((law) => (
+                        <Badge
+                          key={law}
+                          variant="secondary"
+                          className="max-w-xs block truncate"
+                          title={law}
+                        >
+                          {law}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <div className="relative grow">
-                  <h3 className="mt-3 text-lg/6 font-semibold text-foreground group-hover:text-muted-foreground">
-                    {item.title}
-                  </h3>
-                  <p className="mt-5 line-clamp-3 text-sm/6 text-muted-foreground">
-                    {item.description}
-                  </p>
+                <div className="relative w-24 h-16 shrink-0 overflow-hidden rounded bg-muted">
+                  {item.ogImage ? (
+                    <Image
+                      alt={item.title}
+                      src={item.ogImage}
+                      fill
+                      className="object-contain transition-all duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <ImageOff className="h-5 w-5 text-muted-foreground" />
+                      <span className="sr-only">画像なし</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </article>
           ))}
+          </div>
         </div>
       </div>
     </section>

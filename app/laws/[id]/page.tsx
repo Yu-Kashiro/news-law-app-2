@@ -1,21 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  ExternalLink,
-  Scale,
-  BookOpen,
-  History,
-  MessageCircle,
-} from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 import { getLawById } from "@/data/laws";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 type Params = Promise<{ id: string }>;
 type SearchParams = Promise<{ from?: string }>;
@@ -52,158 +40,148 @@ export default async function LawDetailPage({
           </div>
 
           <article className="space-y-8">
-            {/* タイトル */}
-            <div className="flex items-center justify-between flex-wrap gap-4">
-              <div className="flex items-center gap-3">
-                <Scale className="h-8 w-8 text-primary" />
-                <div>
-                  <h1 className="text-2xl font-bold text-foreground">
-                    {law.name}
-                  </h1>
-                  {law.lawNum && (
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {law.lawNum}
-                    </p>
-                  )}
-                </div>
+            {/* 法令タイトルとe-Govリンク */}
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h1 className="text-2xl font-bold text-foreground">
+                  {law.name}
+                </h1>
+                {law.lawNum && (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {law.lawNum}
+                  </p>
+                )}
               </div>
               {law.officialUrl && (
-                <Button asChild>
+                <Button variant="outline" size="sm" asChild>
                   <Link
                     href={law.officialUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="gap-2"
+                    className="gap-1.5"
                   >
-                    e-Gov法令検索
-                    <ExternalLink className="h-4 w-4" />
+                    e-Govで法令を見る
+                    <ExternalLink className="h-3.5 w-3.5" />
                   </Link>
                 </Button>
               )}
             </div>
 
-            {/* 一言で言うと */}
+            {/* 法令情報 */}
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BookOpen className="h-5 w-5" />
-                  一言で言うと
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm/6 text-muted-foreground">
-                  {law.summary}
-                </p>
-              </CardContent>
-            </Card>
+              <CardContent className="p-4 space-y-6">
 
-            {/* なぜこの法律ができたのか */}
-            {law.background && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <History className="h-5 w-5" />
-                    なぜこの法律ができたのか
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="rounded-lg bg-muted/50 p-4">
+                {/* 一言で言うと */}
+                <div className="border-l-2 border-muted pl-3">
+                  <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-2">
+                    一言で言うと
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {law.summary}
+                  </p>
+                </div>
+
+                {/* なぜこの法律ができたのか */}
+                {law.background && (
+                  <div className="border-l-2 border-muted pl-3">
+                    <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-2">
+                      なぜこの法律ができたのか
+                    </p>
                     <p className="text-sm text-muted-foreground whitespace-pre-wrap">
                       {law.background}
                     </p>
                   </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* コメント欄 */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MessageCircle className="h-5 w-5" />
-                  コメント
-                  <span className="text-sm font-normal text-muted-foreground">
-                    (3件)
-                  </span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* コメント入力欄 */}
-                <div className="space-y-3">
-                  <textarea
-                    className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                    placeholder="この法律についてコメントを書く..."
-                    rows={3}
-                    disabled
-                  />
-                  <div className="flex justify-end">
-                    <Button disabled>コメントを投稿</Button>
-                  </div>
-                </div>
-
-                <div className="border-t pt-6 space-y-4">
-                  {/* モックコメント1 */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="text-xs font-medium text-primary">
-                          田中
-                        </span>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium">田中太郎</p>
-                        <p className="text-xs text-muted-foreground">
-                          2024年12月15日
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted-foreground pl-10">
-                      この法律の背景がとても分かりやすくまとまっていて勉強になりました。特に制定の経緯について詳しく知ることができて良かったです。
-                    </p>
-                  </div>
-
-                  {/* モックコメント2 */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="text-xs font-medium text-primary">
-                          佐藤
-                        </span>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium">佐藤花子</p>
-                        <p className="text-xs text-muted-foreground">
-                          2024年12月10日
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted-foreground pl-10">
-                      メリット・デメリットが両方書いてあるのが良いですね。法律の良い面だけでなく課題も知れるのは参考になります。
-                    </p>
-                  </div>
-
-                  {/* モックコメント3 */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="text-xs font-medium text-primary">
-                          鈴木
-                        </span>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium">鈴木一郎</p>
-                        <p className="text-xs text-muted-foreground">
-                          2024年12月5日
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted-foreground pl-10">
-                      法律の要約がとても助かります。原文を読むのは大変なので、このように簡潔にまとめてもらえると理解しやすいです。
-                    </p>
-                  </div>
-                </div>
+                )}
               </CardContent>
             </Card>
+
+            {/* コメント欄 */}
+            <section>
+              <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-4">
+                コメント
+                <span className="ml-2 normal-case tracking-normal">
+                  (3件)
+                </span>
+              </p>
+              <Card>
+                <CardContent className="p-4 space-y-6">
+                  {/* コメント入力欄 */}
+                  <div className="space-y-3">
+                    <textarea
+                      className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      placeholder="この法律についてコメントを書く..."
+                      rows={3}
+                      disabled
+                    />
+                    <div className="flex justify-end">
+                      <Button disabled>コメントを投稿</Button>
+                    </div>
+                  </div>
+
+                  <div className="border-t pt-6 space-y-4">
+                    {/* モックコメント1 */}
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                          <span className="text-xs font-medium text-primary">
+                            田中
+                          </span>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium">田中太郎</p>
+                          <p className="text-xs text-muted-foreground">
+                            2024年12月15日
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-sm text-muted-foreground pl-10">
+                        この法律の背景がとても分かりやすくまとまっていて勉強になりました。特に制定の経緯について詳しく知ることができて良かったです。
+                      </p>
+                    </div>
+
+                    {/* モックコメント2 */}
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                          <span className="text-xs font-medium text-primary">
+                            佐藤
+                          </span>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium">佐藤花子</p>
+                          <p className="text-xs text-muted-foreground">
+                            2024年12月10日
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-sm text-muted-foreground pl-10">
+                        メリット・デメリットが両方書いてあるのが良いですね。法律の良い面だけでなく課題も知れるのは参考になります。
+                      </p>
+                    </div>
+
+                    {/* モックコメント3 */}
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                          <span className="text-xs font-medium text-primary">
+                            鈴木
+                          </span>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium">鈴木一郎</p>
+                          <p className="text-xs text-muted-foreground">
+                            2024年12月5日
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-sm text-muted-foreground pl-10">
+                        法律の要約がとても助かります。原文を読むのは大変なので、このように簡潔にまとめてもらえると理解しやすいです。
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </section>
           </article>
         </div>
       </div>
