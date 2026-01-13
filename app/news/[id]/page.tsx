@@ -21,7 +21,6 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
 
   const news = await getNewsById(id);
   const lawRecords = news?.laws ? await getLawsByNames(news.laws) : [];
-  const lawMap = new Map(lawRecords.map((law) => [law.name, law]));
 
   if (!news) {
     notFound();
@@ -91,26 +90,25 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
             </div>
           </article>
 
-          {news.laws && news.laws.length > 0 && (
+          {lawRecords.length > 0 && (
             <section className="mt-8">
               <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-3">
                 関係法令
               </p>
               <ul className="divide-y divide-border">
-                {news.laws.map((lawName) => {
-                  const law = lawMap.get(lawName);
+                {lawRecords.map((law) => {
                   const relatedLaw = news.relatedLaws?.find(
-                    (r) => r.lawName === lawName
+                    (r) => r.lawName === law.name
                   );
 
                   return (
-                    <li key={lawName}>
+                    <li key={law.id}>
                       <Link
-                        href={law ? `/news/${id}/laws/${law.id}` : "#"}
+                        href={`/news/${id}/laws/${law.id}`}
                         className="block rounded-lg p-3 -mx-3 hover:bg-muted transition-colors"
                       >
                         <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
-                          {lawName}
+                          {law.name}
                           <ArrowRight className="h-3 w-3" />
                         </span>
                         {relatedLaw?.relevanceNote && (

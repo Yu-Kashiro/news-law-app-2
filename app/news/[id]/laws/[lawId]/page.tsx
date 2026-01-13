@@ -83,16 +83,14 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
 
           {/* 関係する理由 */}
           {relatedLaw?.relevanceNote && (
-            <Card className="mb-8">
-              <CardContent className="p-4">
-                <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-2">
-                  このニュースとの関連
-                </p>
-                <p className="text-sm text-foreground">
-                  {relatedLaw.relevanceNote}
-                </p>
-              </CardContent>
-            </Card>
+            <section className="mb-8">
+              <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-2">
+                このニュースとの関連
+              </p>
+              <p className="text-sm text-foreground">
+                {relatedLaw.relevanceNote}
+              </p>
+            </section>
           )}
 
           {/* 関連条文 */}

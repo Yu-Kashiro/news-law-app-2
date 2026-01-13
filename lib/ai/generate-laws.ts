@@ -142,39 +142,44 @@ export async function ensureLawsExist(
 }
 
 
-/** 単一の法令を生成してDBに保存 */
+/** 単一の法令を生成してDBに保存（e-Gov APIで見つかった場合のみ） */
 async function generateAndSaveLaw(lawName: string): Promise<Law | null> {
-  // 既に存在するか確認
-  const existing = await getLawByName(lawName);
-  if (existing) return existing;
-
   // e-Gov APIで法令情報を検索
   const searchResult = await searchLawsByTitle({
     titleKeywords: [lawName],
     limit: 1,
   });
 
-  let eGovLawId: string | undefined;
-  let lawNum: string | undefined;
-  let promulgationDate: string | undefined;
-  let officialUrl: string | undefined;
-
-  if (!searchResult.has_error && searchResult.items.length > 0) {
-    const item = searchResult.items[0];
-    eGovLawId = item.law_id;
-    lawNum = item.law_num;
-    promulgationDate = item.promulgation_date;
-    if (eGovLawId) {
-      officialUrl = `https://elaws.e-gov.go.jp/document?lawid=${eGovLawId}`;
-    }
+  // e-Gov APIで見つからない場合はスキップ
+  if (searchResult.has_error || searchResult.items.length === 0) {
+    return null;
   }
 
+  const item = searchResult.items[0];
+  const officialName = item.law_title;
+
+  // 正式名称がない場合はスキップ
+  if (!officialName) {
+    return null;
+  }
+
+  // 正式名称で既存チェック
+  const existing = await getLawByName(officialName);
+  if (existing) return existing;
+
+  const eGovLawId = item.law_id;
+  const lawNum = item.law_num;
+  const promulgationDate = item.promulgation_date;
+  const officialUrl = eGovLawId
+    ? `https://elaws.e-gov.go.jp/document?lawid=${eGovLawId}`
+    : undefined;
+
   // AI で解説を生成
-  const detail = await generateLawDetail(lawName, lawNum);
+  const detail = await generateLawDetail(officialName, lawNum);
 
   // DBに保存
   const law = await createLaw({
-    name: lawName,
+    name: officialName,
     eGovLawId,
     lawNum,
     promulgationDate,
