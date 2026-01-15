@@ -2,10 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { ImageOff } from "lucide-react";
 import type { NewsItem } from "@/types/news";
+import type { Law } from "@/types/laws";
 import { formatDateJa } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
-export function TopNews({ news }: { news: NewsItem | null }) {
+interface TopNewsProps {
+  news: NewsItem | null;
+  lawRecords: Law[];
+}
+
+export function TopNews({ news, lawRecords }: TopNewsProps) {
   if (!news) {
     return null;
   }
@@ -33,16 +39,16 @@ export function TopNews({ news }: { news: NewsItem | null }) {
               >
                 {formatDateJa(news.publishedAt)}
               </time>
-              {news.laws && news.laws.length > 0 && (
+              {lawRecords.length > 0 && (
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {news.laws.map((law) => (
+                  {lawRecords.map((law) => (
                     <Badge
-                      key={law}
+                      key={law.id}
                       variant="secondary"
                       className="max-w-xs block truncate"
-                      title={law}
+                      title={law.name}
                     >
-                      {law}
+                      {law.name}
                     </Badge>
                   ))}
                 </div>

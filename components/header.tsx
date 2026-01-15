@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { Menu } from 'lucide-react'
+import { Menu, Search } from 'lucide-react'
+import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { ThemeToggle } from '@/components/theme-toggle'
@@ -45,14 +46,42 @@ export function Header() {
                   <Logo className="h-8 w-auto" />
                 </Link>
               </div>
-              <div className="mt-6 flex justify-end">
-                <ThemeToggle />
+              <div className="mt-6 space-y-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    type="search"
+                    placeholder="ニュースや法令を検索..."
+                    className="pl-9"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        alert('検索機能は準備中です')
+                      }
+                    }}
+                  />
+                </div>
+                <div className="flex justify-end">
+                  <ThemeToggle />
+                </div>
               </div>
             </SheetContent>
           </Sheet>
         </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:gap-4">
+          <div className="relative w-64">
+            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="ニュースを検索..."
+              className="pl-9"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  alert('検索機能は準備中です')
+                }
+              }}
+            />
+          </div>
           <ThemeToggle />
         </div>
       </nav>

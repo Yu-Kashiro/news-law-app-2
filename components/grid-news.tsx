@@ -2,10 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { ImageOff } from "lucide-react";
 import type { NewsItem } from "@/types/news";
+import type { Law } from "@/types/laws";
 import { formatDateJa } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
-export function GridNews({ news }: { news: NewsItem[] }) {
+interface GridNewsProps {
+  news: NewsItem[];
+  lawsByName: Map<string, Law>;
+}
+
+export function GridNews({ news, lawsByName }: GridNewsProps) {
   if (news.length === 0) {
     return null;
   }
@@ -18,7 +24,13 @@ export function GridNews({ news }: { news: NewsItem[] }) {
             Latest News
           </p>
           <div className="divide-y divide-border">
-          {news.map((item) => (
+          {news.map((item) => {
+            // この記事に関連する法令レコードを取得
+            const itemLaws = (item.laws ?? [])
+              .map((name) => lawsByName.get(name))
+              .filter((law): law is Law => law !== undefined);
+
+            return (
             <article key={item.id} className="group relative py-4 first:pt-0">
               <Link
                 href={`/news/${item.id}`}
@@ -35,16 +47,16 @@ export function GridNews({ news }: { news: NewsItem[] }) {
                   >
                     {formatDateJa(item.publishedAt)}
                   </time>
-                  {item.laws && item.laws.length > 0 && (
+                  {itemLaws.length > 0 && (
                     <div className="mt-2 flex flex-wrap gap-1">
-                      {item.laws.map((law) => (
+                      {itemLaws.map((law) => (
                         <Badge
-                          key={law}
+                          key={law.id}
                           variant="secondary"
                           className="max-w-xs block truncate"
-                          title={law}
+                          title={law.name}
                         >
-                          {law}
+                          {law.name}
                         </Badge>
                       ))}
                     </div>
@@ -67,7 +79,8 @@ export function GridNews({ news }: { news: NewsItem[] }) {
                 </div>
               </div>
             </article>
-          ))}
+            );
+          })}
           </div>
         </div>
       </div>
