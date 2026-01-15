@@ -1,15 +1,40 @@
 import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+const cardVariants = cva(
+  "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+  {
+    variants: {
+      variant: {
+        default: "",
+        "side-bar": "border-l-4 border-l-primary",
+        "gradient-header":
+          "[&>[data-slot=card-header]]:bg-gradient-to-r [&>[data-slot=card-header]]:from-primary/15 [&>[data-slot=card-header]]:to-transparent [&>[data-slot=card-header]]:rounded-t-xl [&>[data-slot=card-header]]:-mx-px [&>[data-slot=card-header]]:px-6 [&>[data-slot=card-header]]:-mt-6 [&>[data-slot=card-header]]:pt-6",
+        "border-accent":
+          "border-2 border-primary/40 transition-colors duration-200 hover:border-primary hover:shadow-md",
+        "corner-ribbon":
+          "relative overflow-hidden after:content-[''] after:absolute after:top-0 after:right-0 after:border-solid after:border-[24px] after:border-t-primary after:border-r-primary after:border-b-transparent after:border-l-transparent after:z-10",
+        accent:
+          "border-2 border-primary/40 transition-colors duration-200 hover:border-primary hover:shadow-md relative before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-primary before:z-10",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+)
+
+interface CardProps
+  extends React.ComponentProps<"div">,
+    VariantProps<typeof cardVariants> {}
+
+function Card({ className, variant, ...props }: CardProps) {
   return (
     <div
       data-slot="card"
-      className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
-        className
-      )}
+      className={cn(cardVariants({ variant }), className)}
       {...props}
     />
   )
