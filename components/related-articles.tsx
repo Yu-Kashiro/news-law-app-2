@@ -35,7 +35,7 @@ export function RelatedArticles({
           if (!article || !law) return null;
 
           return (
-            <Card key={`${related.articleId}-${index}`}>
+            <Card key={`${related.articleId}-${index}`} variant="accent">
               <CardHeader className="pb-2">
                 <CardTitle className="text-base font-medium">
                   {law.name} {article.articleNum}

@@ -68,7 +68,7 @@ export default async function LawDetailPage({
             </div>
 
             {/* 法令情報 */}
-            <Card>
+            <Card variant="accent">
               <CardContent className="p-4 space-y-6">
 
                 {/* 一言で言うと */}
@@ -103,7 +103,7 @@ export default async function LawDetailPage({
                   (3件)
                 </span>
               </p>
-              <Card>
+              <Card variant="accent">
                 <CardContent className="p-4 space-y-6">
                   {/* コメント入力欄 */}
                   <div className="space-y-3">

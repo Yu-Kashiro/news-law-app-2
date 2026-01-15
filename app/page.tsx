@@ -1,5 +1,6 @@
 import { GridNews } from "@/components/grid-news";
 import { TopNews } from "@/components/top-news";
+import { CurveDivider } from "@/components/wave-divider";
 import { getAllNews } from "@/data/news";
 import { getLawsByNames } from "@/data/laws";
 
@@ -23,6 +24,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col">
       <TopNews news={topNews} lawRecords={topNewsLaws} />
+      <CurveDivider />
       <GridNews news={gridNews} lawsByName={lawsByName} />
     </div>
   );

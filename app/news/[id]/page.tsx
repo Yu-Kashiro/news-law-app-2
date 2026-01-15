@@ -1,18 +1,13 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  ArrowRight,
-  ExternalLink,
-  FileText,
-  ImageOff,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, FileText, ImageOff } from "lucide-react";
 import { getNewsById } from "@/data/news";
 import { getLawsByNames } from "@/data/laws";
 import { formatDateJa } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { CurveDivider } from "@/components/wave-divider";
 
 type Params = Promise<{ id: string }>;
 
@@ -30,7 +25,7 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
     <div className="bg-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:max-w-4xl">
-          <div className="mb-8">
+          <div className="pt-6 mb-8">
             <Button variant="ghost" asChild>
               <Link href="/" className="gap-2">
                 <ArrowLeft className="h-4 w-4" />
@@ -74,7 +69,7 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
                   {news.description}
                 </p>
                 <div className="mt-6">
-                  <Button asChild>
+                  <Button asChild variant="outline">
                     <Link
                       href={news.link}
                       target="_blank"
@@ -89,55 +84,60 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
               </div>
             </div>
           </article>
+        </div>
+      </div>
 
+      <CurveDivider />
+
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl lg:max-w-4xl">
           {lawRecords.length > 0 && (
             <section className="mt-8">
-              <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-3">
+              <h2 className="text-base font-semibold text-foreground mb-4">
                 関係法令
-              </p>
-              <ul className="divide-y divide-border">
+              </h2>
+              <div className="space-y-3">
                 {lawRecords.map((law) => {
                   const relatedLaw = news.relatedLaws?.find(
                     (r) => r.lawName === law.name
                   );
 
                   return (
-                    <li key={law.id}>
-                      <Link
-                        href={`/news/${id}/laws/${law.id}`}
-                        className="block rounded-lg p-3 -mx-3 hover:bg-muted transition-colors"
-                      >
-                        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
-                          {law.name}
-                          <ArrowRight className="h-3 w-3" />
-                        </span>
-                        {relatedLaw?.relevanceNote && (
-                          <p className="mt-1 text-sm text-muted-foreground">
-                            {relatedLaw.relevanceNote}
-                          </p>
-                        )}
+                    <Card
+                      key={law.id}
+                      variant="accent"
+                      className="hover:bg-muted/50"
+                    >
+                      <Link href={`/news/${id}/laws/${law.id}`} className="block">
+                        <CardContent className="py-4">
+                          <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
+                            {law.name}
+                            <ArrowRight className="h-3 w-3" />
+                          </span>
+                          {relatedLaw?.relevanceNote && (
+                            <p className="mt-1 text-sm text-muted-foreground">
+                              {relatedLaw.relevanceNote}
+                            </p>
+                          )}
+                        </CardContent>
                       </Link>
-                    </li>
+                    </Card>
                   );
                 })}
-              </ul>
+              </div>
             </section>
           )}
 
           {news.lawColumn && (
-            <Card className="mt-6">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
-                  {news.lawColumnTitle ?? "法令コラム"}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm/6 text-muted-foreground whitespace-pre-wrap">
-                  {news.lawColumn}
-                </p>
-              </CardContent>
-            </Card>
+            <section className="mt-8">
+              <h2 className="flex items-center gap-2 text-base font-semibold text-foreground mb-3">
+                <FileText className="h-5 w-5" />
+                {news.lawColumnTitle ?? "法令コラム"}
+              </h2>
+              <p className="text-sm/6 text-muted-foreground whitespace-pre-wrap">
+                {news.lawColumn}
+              </p>
+            </section>
           )}
         </div>
       </div>

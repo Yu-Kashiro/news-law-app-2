@@ -23,7 +23,7 @@ export function LawCard({
   relatedArticles,
 }: LawCardProps) {
   return (
-    <Card className="overflow-hidden h-full">
+    <Card variant="accent" className="h-full">
       <CardContent className="p-4 h-full flex flex-col">
         <div className="flex flex-col gap-3 flex-1">
           {/* 法令名と法令番号 */}

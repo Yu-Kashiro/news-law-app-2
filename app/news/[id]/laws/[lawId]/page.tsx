@@ -49,7 +49,7 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
     <div className="bg-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:max-w-4xl">
-          <div className="mb-8">
+          <div className="pt-6 mb-8">
             <Button variant="ghost" asChild>
               <Link href={`/news/${id}`} className="gap-2">
                 <ArrowLeft className="h-4 w-4" />
@@ -101,7 +101,7 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
               </p>
               <div className="space-y-4">
                 {relatedArticles.map(({ related, article }) => (
-                  <Card key={article.id}>
+                  <Card key={article.id} variant="accent">
                     <CardContent className="p-4">
                       <h3 className="font-semibold text-foreground">
                         {article.articleNum}
