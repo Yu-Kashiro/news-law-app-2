@@ -41,18 +41,20 @@ export function Footer() {
             </Link>
           ))}
         </div>
-        <p className="mt-8 text-center text-sm/6 text-muted-foreground md:order-1 md:mt-0">
-          &copy; {new Date().getFullYear()}{" "}
-          <Link
-            href="https://yu-kashiro.dev/"
-            className="hover:text-foreground hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            yu-kashiro.dev
-          </Link>
-          . All rights reserved.
-        </p>
+        <div className="mt-8 text-center md:order-1 md:mt-0">
+          <p className="text-xs text-muted-foreground">
+            &copy; {new Date().getFullYear()}{" "}
+            <Link
+              href="https://yu-kashiro.dev/"
+              className="hover:text-foreground hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              yu-kashiro.dev
+            </Link>
+            . All rights reserved.
+          </p>
+        </div>
       </div>
     </footer>
   )
