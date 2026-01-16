@@ -11,8 +11,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { debounce, useQueryState } from "nuqs";
 
 export function Header() {
+  const [name, setName] = useQueryState("name", {
+    defaultValue: "",
+    shallow: false,
+  });
   return (
     <header className="sticky top-0 z-50 bg-background shadow-sm">
       <nav
@@ -40,13 +45,15 @@ export function Header() {
               <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 type="search"
+                value={name}
+                onChange={(e) =>
+                  setName(e.target.value, {
+                    limitUrlUpdates:
+                      e.target.value === "" ? undefined : debounce(500),
+                  })
+                }
                 placeholder="ニュースを検索..."
                 className="rounded-full pl-9"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    alert("検索機能は準備中です");
-                  }
-                }}
               />
             </div>
             <ThemeToggle />
