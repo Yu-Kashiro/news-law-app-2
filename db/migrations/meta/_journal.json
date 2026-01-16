@@ -64,6 +64,13 @@
       "when": 1768110036655,
       "tag": "0008_modern_paladin",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1768541740662,
+      "tag": "0009_steep_stryfe",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,1 @@
+ALTER TABLE `news_items` ADD `has_valid_laws` integer;

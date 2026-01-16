@@ -20,6 +20,7 @@ export const newsItems = sqliteTable("news_items", {
   relatedArticles: text("related_articles", { mode: "json" }).$type<
     RelatedArticle[]
   >(),
+  hasValidLaws: integer("has_valid_laws", { mode: "boolean" }),
   publishedAt: integer("published_at", { mode: "timestamp" }).notNull(),
   createdAt: integer("created_at", { mode: "timestamp_ms" })
     .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
