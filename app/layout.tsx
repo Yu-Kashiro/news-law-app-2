@@ -24,7 +24,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="flex-1">{children}</main>
+          <main className="mb-8 flex-1">{children}</main>
+          <hr className="border-border" />
           <Footer />
         </ThemeProvider>
       </body>
