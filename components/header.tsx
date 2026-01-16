@@ -74,7 +74,7 @@ export function Header() {
                     <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
                       type="search"
-                      placeholder="ニュースや法令を検索..."
+                      placeholder="ニュースを検索..."
                       className="rounded-full pl-9"
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
