@@ -81,28 +81,30 @@ export function SiteRibbon({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   const scale = scales[size]
 
   return (
-    <svg
-      width="160"
-      height="40"
-      viewBox="0 0 120 32"
-      style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}
-    >
-      {/* 曲線のリボン背景 */}
-      <path
-        d="M5 8 Q60 -5 115 8 L110 24 Q60 35 10 24 Z"
-        fill="#E07B2E"
-      />
-      {/* テキスト */}
-      <text
-        x="60"
-        y="19"
-        textAnchor="middle"
-        className="fill-white text-[13px] font-bold"
-        style={{ fontFamily: 'sans-serif' }}
+    <Link href="/" className="inline-block">
+      <svg
+        width="160"
+        height="40"
+        viewBox="0 0 120 32"
+        style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}
       >
-        日本のルール
-      </text>
-    </svg>
+        {/* 曲線のリボン背景 */}
+        <path
+          d="M5 8 Q60 -5 115 8 L110 24 Q60 35 10 24 Z"
+          fill="#E07B2E"
+        />
+        {/* テキスト */}
+        <text
+          x="60"
+          y="19"
+          textAnchor="middle"
+          className="fill-white text-[13px] font-bold"
+          style={{ fontFamily: 'sans-serif' }}
+        >
+          日本のルール
+        </text>
+      </svg>
+    </Link>
   )
 }
 
