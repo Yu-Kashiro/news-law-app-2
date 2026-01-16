@@ -1,15 +1,37 @@
 import "server-only";
 import { db } from "@/db";
 import { newsItems } from "@/db/schemas/news";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq, like, or } from "drizzle-orm";
 
-/** 全ニュースを取得し、TopNews用とGridNews用に分割して返す（法令が存在するニュースのみ） */
+/** 全ニュースを取得（法令が存在するニュースのみ） */
 export async function getAllNews() {
-  const news = await db
+  return db
     .select()
     .from(newsItems)
     .where(eq(newsItems.hasValidLaws, true))
     .orderBy(desc(newsItems.publishedAt));
+}
+
+export async function searchNews(name: string) {
+  const pattern = `%${name}%`;
+  console.log("searchNews called with:", name, "pattern:", pattern);
+  const result = await db.query.newsItems.findMany({
+    where: and(
+      eq(newsItems.hasValidLaws, true),
+      or(
+        like(newsItems.title, pattern),
+        like(newsItems.description, pattern)
+      )
+    ),
+    orderBy: [desc(newsItems.publishedAt)],
+  });
+  console.log("searchNews result count:", result.length);
+  return result;
+}
+
+/** 全ニュースを、TopNews用とGridNews用に分割して返す */
+export async function getNewsForHomePage() {
+  const news = await getAllNews();
 
   return {
     topNews: news[0] ?? null,
