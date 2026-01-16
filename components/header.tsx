@@ -1,11 +1,16 @@
-'use client'
+"use client";
 
-import { Menu, Search } from 'lucide-react'
-import { SiteLogo, SiteLogoIcon, SiteLogoText, SiteRibbon } from '@/components/site-logo'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { ThemeToggle } from '@/components/theme-toggle'
+import { Menu, Search } from "lucide-react";
+import {
+  SiteLogo,
+  SiteLogoIcon,
+  SiteLogoText,
+  SiteRibbon,
+} from "@/components/site-logo";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Header() {
   return (
@@ -15,7 +20,7 @@ export function Header() {
         className="relative mx-auto flex max-w-7xl items-center justify-between gap-4 p-4 lg:px-8 lg:py-6"
       >
         {/* 左側: ロゴアイコン */}
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <SiteLogoIcon size="md" />
         </div>
 
@@ -38,8 +43,8 @@ export function Header() {
                 placeholder="ニュースを検索..."
                 className="rounded-full pl-9"
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    alert('検索機能は準備中です')
+                  if (e.key === "Enter") {
+                    alert("検索機能は準備中です");
                   }
                 }}
               />
@@ -72,8 +77,8 @@ export function Header() {
                       placeholder="ニュースや法令を検索..."
                       className="rounded-full pl-9"
                       onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          alert('検索機能は準備中です')
+                        if (e.key === "Enter") {
+                          alert("検索機能は準備中です");
                         }
                       }}
                     />
@@ -85,5 +90,5 @@ export function Header() {
         </div>
       </nav>
     </header>
-  )
+  );
 }
