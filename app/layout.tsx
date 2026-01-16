@@ -3,6 +3,7 @@ import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata: Metadata = {
   title: "ニュースでまなぶ！日本のルール",
@@ -23,10 +24,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="mb-8 flex-1">{children}</main>
-          <hr className="border-border" />
-          <Footer />
+          <NuqsAdapter>
+            <Header />
+            <main className="mb-8 flex-1">{children}</main>
+            <hr className="border-border" />
+            <Footer />
+          </NuqsAdapter>
         </ThemeProvider>
       </body>
     </html>
