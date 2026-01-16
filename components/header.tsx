@@ -36,7 +36,7 @@ export function Header() {
               <Input
                 type="search"
                 placeholder="ニュースを検索..."
-                className="pl-9"
+                className="rounded-full pl-9"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     alert('検索機能は準備中です')
@@ -70,7 +70,7 @@ export function Header() {
                     <Input
                       type="search"
                       placeholder="ニュースや法令を検索..."
-                      className="pl-9"
+                      className="rounded-full pl-9"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                           alert('検索機能は準備中です')
