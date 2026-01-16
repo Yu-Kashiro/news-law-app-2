@@ -20,8 +20,9 @@ export function GridNews({ news, lawsByName }: GridNewsProps) {
     <section className="bg-background py-8">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
-          <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-6">
-            Latest News
+          <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-6 flex items-center gap-2">
+            <Image src="/25650_line.svg" alt="" width={24} height={24} />
+            最新ニュース
           </p>
           <div className="divide-y divide-border">
           {news.map((item) => {

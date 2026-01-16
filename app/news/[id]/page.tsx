@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ExternalLink, FileText, ImageOff } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, ImageOff } from "lucide-react";
 import { getNewsById } from "@/data/news";
 import { getLawsByNames } from "@/data/laws";
 import { formatDateJa } from "@/lib/utils";
@@ -93,7 +93,14 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
         <div className="mx-auto max-w-2xl lg:max-w-4xl">
           {lawRecords.length > 0 && (
             <section className="mt-8">
-              <h2 className="text-base font-semibold text-foreground mb-4">
+              <h2 className="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
+                <Image
+                  src="/16366_line.svg"
+                  alt=""
+                  width={24}
+                  height={30}
+                  className="inline-block"
+                />
                 関係法令
               </h2>
               <div className="space-y-3">
@@ -131,7 +138,13 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
           {news.lawColumn && (
             <section className="mt-8">
               <h2 className="flex items-center gap-2 text-base font-semibold text-foreground mb-3">
-                <FileText className="h-5 w-5" />
+                <Image
+                  src="/12976_color.svg"
+                  alt=""
+                  width={24}
+                  height={30}
+                  className="inline-block"
+                />
                 {news.lawColumnTitle ?? "法令コラム"}
               </h2>
               <p className="text-sm/6 text-muted-foreground whitespace-pre-wrap">

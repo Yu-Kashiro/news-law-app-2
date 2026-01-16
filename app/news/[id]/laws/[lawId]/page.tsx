@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { getNewsById } from "@/data/news";
@@ -96,7 +97,14 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
           {/* 関連条文 */}
           {relatedArticles.length > 0 && (
             <section>
-              <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-4">
+              <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-4 flex items-center gap-2">
+                <Image
+                  src="/12821.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="inline-block"
+                />
                 関連条文
               </p>
               <div className="space-y-4">

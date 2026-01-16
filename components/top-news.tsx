@@ -24,8 +24,15 @@ export function TopNews({ news, lawRecords }: TopNewsProps) {
           <div className="flex flex-col lg:flex-row lg:justify-center gap-6 lg:gap-8">
             {/* 左側: テキストコンテンツ */}
             <div className="flex-1 lg:max-w-md">
-              <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-6">
-                Pick Up
+              <p className="text-xs font-semibold tracking-widest text-muted-foreground mb-6 flex items-center gap-2">
+                <Image
+                  src="/15294.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  className="inline-block"
+                />
+                注目のニュース
               </p>
               <h2 className="text-2xl lg:text-3xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">
                 {news.title}
