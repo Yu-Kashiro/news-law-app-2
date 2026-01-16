@@ -3,11 +3,12 @@ import { db } from "@/db";
 import { newsItems } from "@/db/schemas/news";
 import { desc, eq } from "drizzle-orm";
 
-/** 全ニュースを取得し、TopNews用とGridNews用に分割して返す */
+/** 全ニュースを取得し、TopNews用とGridNews用に分割して返す（法令が存在するニュースのみ） */
 export async function getAllNews() {
   const news = await db
     .select()
     .from(newsItems)
+    .where(eq(newsItems.hasValidLaws, true))
     .orderBy(desc(newsItems.publishedAt));
 
   return {

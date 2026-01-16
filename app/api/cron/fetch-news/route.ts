@@ -179,6 +179,7 @@ export async function GET(request: Request) {
 
         // 法令詳細を事前生成してDBに保存し、関連条文も取得
         let relatedArticles = null;
+        let hasValidLaws = false;
         if (lawsResponse.laws && lawsResponse.laws.length > 0) {
           const result = await ensureLawsExist(lawsResponse.laws, {
             title: item.title,
@@ -187,6 +188,7 @@ export async function GET(request: Request) {
           });
           relatedArticles =
             result.relatedArticles.length > 0 ? result.relatedArticles : null;
+          hasValidLaws = result.hasValidLaws;
         }
 
         await db
@@ -197,6 +199,7 @@ export async function GET(request: Request) {
             lawColumnTitle: lawsResponse.lawColumnTitle,
             lawColumn: lawsResponse.lawColumn,
             relatedArticles,
+            hasValidLaws,
             updatedAt: new Date(),
           })
           .where(eq(newsItems.id, insertedItem));

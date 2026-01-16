@@ -3,7 +3,7 @@ import { generateText, Output } from "ai";
 import { gateway } from "@ai-sdk/gateway";
 import { z } from "zod";
 import type { LawsResponse } from "@/types/news";
-import type { Law, RelatedLaw } from "@/types/laws";
+import type { Law } from "@/types/laws";
 import { getLawByName, getLawsByNames, createLaw } from "@/data/laws";
 import { searchLawsByTitle } from "@/lib/law-tools/laws-api-client";
 import { generateLawDetail } from "@/lib/ai/generate-law-detail";
@@ -93,8 +93,8 @@ ${description}
 export async function ensureLawsExist(
   lawNames: string[],
   newsContext?: { title: string; description: string; keywords: string[] }
-): Promise<{ laws: Law[]; relatedArticles: RelatedArticle[] }> {
-  if (lawNames.length === 0) return { laws: [], relatedArticles: [] };
+): Promise<{ laws: Law[]; relatedArticles: RelatedArticle[]; hasValidLaws: boolean }> {
+  if (lawNames.length === 0) return { laws: [], relatedArticles: [], hasValidLaws: false };
 
   // 既存の法令を取得
   const existingLaws = await getLawsByNames(lawNames);
@@ -138,7 +138,10 @@ export async function ensureLawsExist(
     }
   }
 
-  return { laws: allLaws, relatedArticles };
+  // e-Gov APIで1件以上見つかった法令があるかどうか
+  const hasValidLaws = allLaws.length > 0;
+
+  return { laws: allLaws, relatedArticles, hasValidLaws };
 }
 
 
