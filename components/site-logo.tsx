@@ -83,19 +83,29 @@ export function SiteRibbon({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   return (
     <Link href="/" className="inline-block">
       <svg
-        width="160"
+        width="200"
         height="40"
-        viewBox="0 0 120 32"
+        viewBox="0 0 160 32"
         style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}
       >
+        {/* 左側の装飾ライン */}
+        <line
+          x1="0"
+          y1="16"
+          x2="22"
+          y2="16"
+          stroke="#C56A1F"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
         {/* 曲線のリボン背景 */}
         <path
-          d="M5 8 Q60 -5 115 8 L110 24 Q60 35 10 24 Z"
+          d="M25 8 Q80 -5 135 8 L130 24 Q80 35 30 24 Z"
           fill="#E07B2E"
         />
         {/* テキスト */}
         <text
-          x="60"
+          x="80"
           y="19"
           textAnchor="middle"
           className="fill-white text-[13px] font-bold"
@@ -103,6 +113,16 @@ export function SiteRibbon({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
         >
           日本のルール
         </text>
+        {/* 右側の装飾ライン */}
+        <line
+          x1="138"
+          y1="16"
+          x2="160"
+          y2="16"
+          stroke="#C56A1F"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
       </svg>
     </Link>
   )
