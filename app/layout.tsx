@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
@@ -25,7 +26,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NuqsAdapter>
-            <Header />
+            <Suspense>
+              <Header />
+            </Suspense>
             <main className="mb-8 flex-1">{children}</main>
             <hr className="border-border" />
             <Footer />
