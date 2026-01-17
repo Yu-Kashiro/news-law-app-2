@@ -115,11 +115,14 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
                       variant="accent"
                       className="hover:bg-muted/50"
                     >
-                      <Link href={`/news/${id}/laws/${law.id}`} className="block">
+                      <Link
+                        href={`/news/${id}/laws/${law.id}`}
+                        className="group block"
+                      >
                         <CardContent className="py-4">
-                          <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
+                          <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground group-hover:underline">
                             {law.name}
-                            <ArrowRight className="h-3 w-3" />
+                            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                           </span>
                           {relatedLaw?.relevanceNote && (
                             <p className="mt-1 text-sm text-muted-foreground">
@@ -137,7 +140,7 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
 
           {news.lawColumn && (
             <section className="mt-8">
-              <h2 className="flex items-center gap-2 text-base font-semibold text-foreground mb-3">
+              <h2 className="flex items-center gap-2 text-base font-semibold bg-primary/20 text-foreground px-4 py-2 rounded-md mb-3">
                 <Image
                   src="/12976_color.svg"
                   alt=""
