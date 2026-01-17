@@ -1,5 +1,30 @@
 import Link from "next/link"
 
+function DecorativeDots() {
+  return (
+    <>
+      {/* 左端のピンク - 中大 */}
+      <div className="absolute left-[3%] top-4 size-2.5 rounded-full bg-[#f28b82] opacity-75" />
+      {/* 左側の黄色 - 極小 */}
+      <div className="absolute left-[10%] bottom-3 size-1 rounded-full bg-[#fdd663] opacity-65" />
+      {/* 左中の青 - 大 */}
+      <div className="absolute left-[18%] top-6 size-3 rounded-full bg-[#6b9bd1] opacity-80" />
+      {/* 中央左の緑 - 小 */}
+      <div className="absolute left-[30%] bottom-5 size-1.5 rounded-full bg-[#81c995] opacity-70" />
+      {/* 中央の黄色 - 極小 */}
+      <div className="absolute left-[45%] top-3 size-1 rounded-full bg-[#fdd663] opacity-60" />
+      {/* 中央右のピンク - 小 */}
+      <div className="absolute right-[35%] bottom-4 size-1.5 rounded-full bg-[#f28b82] opacity-70" />
+      {/* 右側の緑 - 中大 */}
+      <div className="absolute right-[20%] top-5 size-2.5 rounded-full bg-[#a8e063] opacity-80" />
+      {/* 右側の青 - 極小 */}
+      <div className="absolute right-[12%] bottom-6 size-1 rounded-full bg-[#7baaf7] opacity-65" />
+      {/* 右端の黄色 - 中 */}
+      <div className="absolute right-[4%] top-4 size-2 rounded-full bg-[#fdd663] opacity-75" />
+    </>
+  );
+}
+
 const navigation = [
   {
     name: "X",
@@ -27,7 +52,9 @@ const navigation = [
 
 export function Footer() {
   return (
-    <footer className="bg-background">
+    <footer className="relative bg-background overflow-hidden">
+      {/* 装飾ドット */}
+      <DecorativeDots />
       <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center gap-x-6 md:order-2">
           {navigation.map((item) => (

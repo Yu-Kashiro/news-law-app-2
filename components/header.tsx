@@ -13,13 +13,38 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { debounce, useQueryState } from "nuqs";
 
+function DecorativeDots() {
+  return (
+    <>
+      {/* 左上の緑 - 大 */}
+      <div className="absolute left-[5%] top-2 size-3 rounded-full bg-[#a8e063] opacity-80" />
+      {/* 左側の青 - 極小 */}
+      <div className="absolute left-[12%] bottom-2 size-1 rounded-full bg-[#6b9bd1] opacity-60" />
+      {/* 左中の黄色 - 小 */}
+      <div className="absolute left-[22%] top-5 size-1.5 rounded-full bg-[#fdd663] opacity-70" />
+      {/* 中央左のピンク - 中 */}
+      <div className="absolute left-[35%] bottom-3 size-2.5 rounded-full bg-[#f28b82] opacity-75" />
+      {/* 中央右の黄色 - 極小 */}
+      <div className="absolute right-[40%] top-3 size-1 rounded-full bg-[#fdd663] opacity-65" />
+      {/* 右側の緑 - 小 */}
+      <div className="absolute right-[25%] bottom-4 size-1.5 rounded-full bg-[#81c995] opacity-70" />
+      {/* 右側の青 - 中大 */}
+      <div className="absolute right-[15%] top-2 size-2.5 rounded-full bg-[#7baaf7] opacity-75" />
+      {/* 右端のピンク - 極小 */}
+      <div className="absolute right-[5%] bottom-2 size-1 rounded-full bg-[#f28b82] opacity-60" />
+    </>
+  );
+}
+
 export function Header() {
   const [name, setName] = useQueryState("name", {
     defaultValue: "",
     shallow: false,
   });
   return (
-    <header className="sticky top-0 z-50 bg-background shadow-sm">
+    <header className="relative sticky top-0 z-50 bg-background shadow-sm overflow-hidden">
+      {/* 装飾ドット */}
+      <DecorativeDots />
       <nav
         aria-label="Global"
         className="relative mx-auto flex max-w-7xl items-center justify-between gap-4 p-4 lg:px-8 lg:py-6"
