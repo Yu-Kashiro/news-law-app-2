@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { GridNews } from "@/components/grid-news";
 import { TopNews } from "@/components/top-news";
 import { CurveDivider } from "@/components/wave-divider";
@@ -36,7 +37,20 @@ export default async function Home({ searchParams }: PageProps<"/">) {
           <CurveDivider />
         </>
       )}
-      <GridNews news={gridNews} lawsByName={lawsByName} />
+      {name && allNews.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <Image
+            src="/17029.svg"
+            alt=""
+            width={160}
+            height={160}
+            className="mb-4 opacity-60"
+          />
+          <p className="text-muted-foreground">ニュースが見つかりませんでした</p>
+        </div>
+      ) : (
+        <GridNews news={gridNews} lawsByName={lawsByName} />
+      )}
     </div>
   );
 }
