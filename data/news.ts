@@ -20,7 +20,8 @@ export async function searchNews(name: string) {
       eq(newsItems.hasValidLaws, true),
       or(
         like(newsItems.title, pattern),
-        like(newsItems.description, pattern)
+        like(newsItems.description, pattern),
+        like(newsItems.relatedLaws, pattern)
       )
     ),
     orderBy: [desc(newsItems.publishedAt)],
