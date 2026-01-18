@@ -51,7 +51,7 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
     <div className="bg-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:max-w-4xl">
-          <div className="pt-3 mb-4 sm:pt-6 sm:mb-8">
+          <div className="pt-6 mb-8">
             <Button variant="ghost" asChild className="!px-0">
               <Link href={`/news/${id}`} className="gap-2">
                 <ArrowLeft className="h-4 w-4" />
