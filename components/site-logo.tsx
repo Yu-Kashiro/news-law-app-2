@@ -3,11 +3,13 @@
 import Link from 'next/link'
 
 interface SiteLogoIconProps {
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
+  className?: string
 }
 
-export function SiteLogoIcon({ size = 'md' }: SiteLogoIconProps) {
+export function SiteLogoIcon({ size = 'md', className }: SiteLogoIconProps) {
   const scales = {
+    xs: 0.8,
     sm: 1,
     md: 1.3,
     lg: 1.6,
@@ -15,7 +17,7 @@ export function SiteLogoIcon({ size = 'md' }: SiteLogoIconProps) {
   const scale = scales[size]
 
   return (
-    <Link href="/" className="inline-block">
+    <Link href="/" className={className ?? "inline-block"}>
       <svg
         width="36"
         height="36"
@@ -51,8 +53,9 @@ export function SiteLogoIcon({ size = 'md' }: SiteLogoIconProps) {
   )
 }
 
-export function SiteLogoText({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
+export function SiteLogoText({ size = 'md', className }: { size?: 'xs' | 'sm' | 'md' | 'lg', className?: string }) {
   const scales = {
+    xs: 0.7,
     sm: 1,
     md: 1.3,
     lg: 1.6,
@@ -60,7 +63,7 @@ export function SiteLogoText({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   const scale = scales[size]
 
   return (
-    <Link href="/" className="inline-block">
+    <Link href="/" className={className ?? "inline-block"}>
       <span
         className="text-2xl font-black"
         style={{ transform: `scale(${scale})`, transformOrigin: 'center', display: 'inline-block' }}
@@ -72,8 +75,9 @@ export function SiteLogoText({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   )
 }
 
-export function SiteRibbon({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
+export function SiteRibbon({ size = 'md', className }: { size?: 'xs' | 'sm' | 'md' | 'lg', className?: string }) {
   const scales = {
+    xs: 0.7,
     sm: 1,
     md: 1.3,
     lg: 1.6,
@@ -81,12 +85,12 @@ export function SiteRibbon({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   const scale = scales[size]
 
   return (
-    <Link href="/" className="inline-block">
+    <Link href="/" className={className ?? "inline-block"}>
       <svg
         width="200"
         height="40"
         viewBox="0 0 160 32"
-        style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}
+        style={{ transform: `scale(${scale})`, transformOrigin: 'center', marginTop: -8 }}
       >
         {/* 左側の装飾ライン */}
         <line
