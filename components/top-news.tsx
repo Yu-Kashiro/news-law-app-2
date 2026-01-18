@@ -34,7 +34,7 @@ export function TopNews({ news, lawRecords }: TopNewsProps) {
                 />
                 注目のニュース
               </p>
-              <h2 className="text-2xl lg:text-3xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">
+              <h2 className="text-xl lg:text-3xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">
                 {news.title}
               </h2>
               <p className="mt-4 text-sm text-muted-foreground line-clamp-3">
