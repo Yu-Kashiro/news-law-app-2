@@ -59,7 +59,7 @@ export function Header() {
           <div className="pointer-events-auto flex flex-col items-center">
             <SiteLogoText size="xs" className="lg:hidden" />
             <SiteLogoText size="sm" className="hidden lg:block" />
-            <SiteRibbon size="xs" className="lg:hidden" />
+            <SiteRibbon size="xs" className="-mt-2 lg:hidden" />
             <SiteRibbon size="sm" className="hidden lg:block" />
           </div>
         </div>
