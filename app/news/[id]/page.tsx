@@ -25,11 +25,23 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
     <div className="bg-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:max-w-4xl">
-          <div className="pt-6 mb-8">
-            <Button variant="ghost" asChild>
+          <div className="pt-6 mb-8 flex items-center justify-between">
+            <Button variant="ghost" asChild className="!px-0">
               <Link href="/" className="gap-2">
                 <ArrowLeft className="h-4 w-4" />
-                ニュース一覧に戻る
+                <span className="sm:hidden">戻る</span>
+                <span className="hidden sm:inline">ニュース一覧に戻る</span>
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="sm" className="sm:hidden">
+              <Link
+                href={news.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="gap-2"
+              >
+                元の記事を読む
+                <ExternalLink className="h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -68,7 +80,7 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
                 <p className="mt-5 text-sm/6 text-muted-foreground">
                   {news.description}
                 </p>
-                <div className="mt-6">
+                <div className="mt-6 hidden sm:block">
                   <Button asChild variant="outline">
                     <Link
                       href={news.link}
