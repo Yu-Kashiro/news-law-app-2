@@ -21,7 +21,7 @@ function DecorativeDots() {
       {/* 左中の黄色 - 小 */}
       <div className="absolute left-[22%] top-5 size-1.5 rounded-full bg-[#fdd663] opacity-70" />
       {/* 中央左のピンク - 中 */}
-      <div className="absolute left-[35%] bottom-3 size-2.5 rounded-full bg-[#f28b82] opacity-75" />
+      <div className="absolute left-[25%] bottom-3 size-2.5 rounded-full bg-[#f28b82] opacity-75" />
       {/* 中央右の黄色 - 極小 */}
       <div className="absolute right-[40%] top-3 size-1 rounded-full bg-[#fdd663] opacity-65" />
       {/* 右側の緑 - 小 */}
