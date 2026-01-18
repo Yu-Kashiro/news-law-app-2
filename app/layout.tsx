@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { ThemeProvider } from "@/components/theme-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata: Metadata = {
@@ -17,23 +16,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" suppressHydrationWarning>
+    <html lang="ja">
       <body className="wrap-anywhere flex min-h-screen flex-col">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <NuqsAdapter>
-            <Suspense>
-              <Header />
-            </Suspense>
-            <main className="mb-8 flex-1">{children}</main>
-            <hr className="border-border" />
-            <Footer />
-          </NuqsAdapter>
-        </ThemeProvider>
+        <NuqsAdapter>
+          <Suspense>
+            <Header />
+          </Suspense>
+          <main className="mb-8 flex-1">{children}</main>
+          <hr className="border-border" />
+          <Footer />
+        </NuqsAdapter>
       </body>
     </html>
   );

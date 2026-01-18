@@ -10,7 +10,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { debounce, useQueryState } from "nuqs";
 
 function DecorativeDots() {
@@ -81,12 +80,10 @@ export function Header() {
                 className="rounded-full pl-9"
               />
             </div>
-            <ThemeToggle />
           </div>
 
-          {/* モバイル: テーマ切替とメニュー */}
+          {/* モバイル: メニュー */}
           <div className="flex items-center gap-2 lg:hidden">
-            <ThemeToggle />
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-foreground">
