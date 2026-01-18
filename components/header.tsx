@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { ArrowLeft, Search, X } from "lucide-react";
 import {
   SiteLogoIcon,
@@ -40,6 +41,7 @@ export function Header() {
     shallow: false,
   });
   const [, setPage] = useQueryState("page");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   return (
     <header className="relative sticky top-0 z-50 bg-background shadow-sm overflow-hidden">
       {/* 装飾ドット */}
@@ -98,7 +100,7 @@ export function Header() {
 
           {/* モバイル: 検索 */}
           <div className="flex items-center gap-2 lg:hidden">
-            <Sheet>
+            <Sheet open={isSearchOpen} onOpenChange={setIsSearchOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-foreground">
                   <span className="sr-only">検索を開く</span>
@@ -126,6 +128,11 @@ export function Header() {
                           limitUrlUpdates:
                             e.target.value === "" ? undefined : debounce(500),
                         });
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          setIsSearchOpen(false);
+                        }
                       }}
                       placeholder="ニュースを検索..."
                       className="rounded-full pl-9 pr-9"
