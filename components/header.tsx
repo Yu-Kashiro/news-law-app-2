@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { ArrowLeft, Search, X } from "lucide-react";
 import {
   SiteLogoIcon,
   SiteLogoText,
@@ -8,7 +8,7 @@ import {
 } from "@/components/site-logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { debounce, useQueryState } from "nuqs";
 
 function DecorativeDots() {
@@ -81,8 +81,18 @@ export function Header() {
                   });
                 }}
                 placeholder="ニュースを検索..."
-                className="rounded-full pl-9"
+                className="rounded-full pl-9 pr-9"
               />
+              {name && (
+                <button
+                  type="button"
+                  onClick={() => setName("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  <X className="size-4" />
+                  <span className="sr-only">検索をクリア</span>
+                </button>
+              )}
             </div>
           </div>
 
@@ -98,23 +108,40 @@ export function Header() {
               <SheetContent
                 side="top"
                 className="bg-background p-4"
+                hideCloseButton
               >
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    type="search"
-                    value={name}
-                    onChange={(e) => {
-                      setPage(null);
-                      setName(e.target.value, {
-                        limitUrlUpdates:
-                          e.target.value === "" ? undefined : debounce(500),
-                      });
-                    }}
-                    placeholder="ニュースを検索..."
-                    className="rounded-full pl-9"
-                    autoFocus
-                  />
+                <div className="flex items-center gap-2">
+                  <SheetClose className="text-muted-foreground hover:text-foreground">
+                    <ArrowLeft className="size-5" />
+                    <span className="sr-only">閉じる</span>
+                  </SheetClose>
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      type="search"
+                      value={name}
+                      onChange={(e) => {
+                        setPage(null);
+                        setName(e.target.value, {
+                          limitUrlUpdates:
+                            e.target.value === "" ? undefined : debounce(500),
+                        });
+                      }}
+                      placeholder="ニュースを検索..."
+                      className="rounded-full pl-9 pr-9"
+                      autoFocus
+                    />
+                    {name && (
+                      <button
+                        type="button"
+                        onClick={() => setName("")}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      >
+                        <X className="size-4" />
+                        <span className="sr-only">検索をクリア</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
