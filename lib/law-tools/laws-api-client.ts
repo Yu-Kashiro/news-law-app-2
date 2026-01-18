@@ -366,15 +366,43 @@ class ResponseFormatter {
     return articles;
   }
 
-  private static extractText(element: unknown): string {
+  private static extractText(element: unknown, depth = 0): string {
     if (typeof element === "string") {
       return element;
     }
     if (typeof element === "object" && element !== null) {
       const el = element as Record<string, unknown>;
+      const tag = el.tag as string | undefined;
       const children = el.children;
+
+      // 条番号（ArticleTitle: 第二十条など）は見出しと重複するのでスキップ
+      if (tag === "ArticleTitle") {
+        return "";
+      }
+
       if (Array.isArray(children)) {
-        return children.map((child) => this.extractText(child)).join("");
+        const childTexts = children.map((child) =>
+          this.extractText(child, depth + 1)
+        );
+
+        const text = childTexts.join("");
+
+        // 項（Paragraph）の前に空行を追加
+        if (tag === "Paragraph") {
+          return "\n\n" + text;
+        }
+
+        // 号（Item）の前に改行を追加
+        if (tag === "Item") {
+          return "\n" + text;
+        }
+
+        // 号番号（ItemTitle: 一、二など）の後にスペースを追加
+        if (tag === "ItemTitle") {
+          return text + " ";
+        }
+
+        return text;
       }
     }
     return "";
