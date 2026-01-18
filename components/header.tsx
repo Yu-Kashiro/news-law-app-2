@@ -40,6 +40,7 @@ export function Header() {
     defaultValue: "",
     shallow: false,
   });
+  const [, setPage] = useQueryState("page");
   return (
     <header className="relative sticky top-0 z-50 bg-background shadow-sm overflow-hidden">
       {/* 装飾ドット */}
@@ -70,12 +71,13 @@ export function Header() {
               <Input
                 type="search"
                 value={name}
-                onChange={(e) =>
+                onChange={(e) => {
+                  setPage(null);
                   setName(e.target.value, {
                     limitUrlUpdates:
                       e.target.value === "" ? undefined : debounce(500),
-                  })
-                }
+                  });
+                }}
                 placeholder="ニュースを検索..."
                 className="rounded-full pl-9"
               />
