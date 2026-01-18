@@ -118,7 +118,7 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
                         {article.articleText}
                       </p>
                       {related.relevanceNote && (
-                        <p className="mt-3 text-xs text-muted-foreground/70 italic border-t pt-3">
+                        <p className="mt-3 text-sm text-foreground border-t pt-3">
                           {related.relevanceNote}
                         </p>
                       )}

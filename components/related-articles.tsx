@@ -55,7 +55,7 @@ export function RelatedArticles({
                       <p className="text-sm font-medium text-foreground mb-1">
                         この条文とニュースの関係
                       </p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-foreground">
                         {related.relevanceNote}
                       </p>
                     </div>
