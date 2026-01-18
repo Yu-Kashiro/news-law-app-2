@@ -17,7 +17,7 @@ const cardVariants = cva(
         "corner-ribbon":
           "relative overflow-hidden after:content-[''] after:absolute after:top-0 after:right-0 after:border-solid after:border-[24px] after:border-t-primary after:border-r-primary after:border-b-transparent after:border-l-transparent after:z-10",
         accent:
-          "border-2 border-primary/40 transition-colors duration-200 hover:border-primary hover:shadow-md relative before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-primary before:z-10",
+          "border-2 border-primary/40 transition-colors duration-200 hover:border-primary hover:shadow-md relative overflow-hidden before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-primary before:z-10",
       },
     },
     defaultVariants: {
