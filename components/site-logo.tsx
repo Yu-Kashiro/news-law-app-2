@@ -90,7 +90,7 @@ export function SiteRibbon({ size = 'md', className }: { size?: 'xs' | 'sm' | 'm
         width="200"
         height="40"
         viewBox="0 0 160 32"
-        style={{ transform: `scale(${scale})`, transformOrigin: 'center', marginTop: -8 }}
+        style={{ transform: `scale(${scale})`, transformOrigin: 'center', marginTop: 0 }}
       >
         {/* 左側の装飾ライン */}
         <line
