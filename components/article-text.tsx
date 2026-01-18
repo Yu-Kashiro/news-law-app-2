@@ -22,6 +22,9 @@ export function ArticleText({
   const [isExpanded, setIsExpanded] = useState(false);
   const [isClamped, setIsClamped] = useState(false);
   const textRef = useRef<HTMLDivElement>(null);
+  // ResizeObserver内で最新のisExpanded値を参照するためのref
+  const isExpandedRef = useRef(isExpanded);
+  isExpandedRef.current = isExpanded;
 
   // テキストが切り詰められているかを検出（初回マウント時とテキスト変更時のみ）
   useEffect(() => {
@@ -30,7 +33,7 @@ export function ArticleText({
 
     const checkClamped = () => {
       // 展開中は判定をスキップ（折りたたみ時の状態を維持）
-      if (isExpanded) return;
+      if (isExpandedRef.current) return;
       // scrollHeightがclientHeightより大きい場合、テキストは切り詰められている
       setIsClamped(element.scrollHeight > element.clientHeight + 1);
     };
@@ -42,7 +45,6 @@ export function ArticleText({
     resizeObserver.observe(element);
 
     return () => resizeObserver.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text]);
 
   const showToggle = isClamped || isExpanded;
