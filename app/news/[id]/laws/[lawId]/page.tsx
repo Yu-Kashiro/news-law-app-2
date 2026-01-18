@@ -7,6 +7,7 @@ import { getLawById } from "@/data/laws";
 import { getArticlesByLawId } from "@/data/law-articles";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ArticleText } from "@/components/article-text";
 import type { LawArticle, RelatedArticle } from "@/types/laws";
 
 type Params = Promise<{ id: string; lawId: string }>;
@@ -50,11 +51,12 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
     <div className="bg-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:max-w-4xl">
-          <div className="pt-6 mb-8">
-            <Button variant="ghost" asChild>
+          <div className="pt-3 mb-4 sm:pt-6 sm:mb-8">
+            <Button variant="ghost" asChild className="!px-0">
               <Link href={`/news/${id}`} className="gap-2">
                 <ArrowLeft className="h-4 w-4" />
-                ニュース詳細に戻る
+                <span className="sm:hidden">戻る</span>
+                <span className="hidden sm:inline">ニュース詳細に戻る</span>
               </Link>
             </Button>
           </div>
@@ -68,7 +70,7 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
               )}
             </div>
             {law.officialUrl && (
-              <Button asChild variant="outline" size="sm" className="shrink-0">
+              <Button asChild variant="outline" size="sm" className="shrink-0 hidden sm:inline-flex">
                 <Link
                   href={law.officialUrl}
                   target="_blank"
@@ -97,16 +99,31 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
           {/* 関連条文 */}
           {relatedArticles.length > 0 && (
             <section>
-              <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-4 flex items-center gap-2">
-                <Image
-                  src="/12821.svg"
-                  alt=""
-                  width={20}
-                  height={20}
-                  className="inline-block"
-                />
-                関連条文
-              </p>
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground flex items-center gap-2">
+                  <Image
+                    src="/12821.svg"
+                    alt=""
+                    width={20}
+                    height={20}
+                    className="inline-block"
+                  />
+                  関連条文
+                </p>
+                {law.officialUrl && (
+                  <Button asChild variant="outline" size="sm" className="sm:hidden">
+                    <Link
+                      href={law.officialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="gap-1.5"
+                    >
+                      e-Govで法令を見る
+                      <ExternalLink className="h-3.5 w-3.5" />
+                    </Link>
+                  </Button>
+                )}
+              </div>
               <div className="space-y-4">
                 {relatedArticles.map(({ related, article }) => (
                   <Card key={article.id} variant="accent">
@@ -114,9 +131,10 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
                       <h3 className="font-semibold text-foreground">
                         {article.articleNum}
                       </h3>
-                      <p className="mt-2 text-sm text-muted-foreground whitespace-pre-wrap">
-                        {article.articleText}
-                      </p>
+                      <ArticleText
+                        text={article.articleText}
+                        className="mt-2"
+                      />
                       {related.relevanceNote && (
                         <p className="mt-3 text-sm text-foreground border-t pt-3">
                           {related.relevanceNote}
