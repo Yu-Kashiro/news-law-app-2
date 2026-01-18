@@ -30,7 +30,7 @@ export function TopNews({ news, lawRecords }: TopNewsProps) {
                   alt=""
                   width={24}
                   height={24}
-                  className="inline-block"
+                  className="inline-block size-[22px] lg:size-6"
                 />
                 注目のニュース
               </p>
