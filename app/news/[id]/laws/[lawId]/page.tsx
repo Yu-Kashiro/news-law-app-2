@@ -128,12 +128,9 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
                 {relatedArticles.map(({ related, article }) => (
                   <Card key={article.id} variant="accent">
                     <CardContent className="p-4">
-                      <h3 className="font-semibold text-foreground">
-                        {article.articleNum}
-                      </h3>
                       <ArticleText
+                        title={article.articleNum}
                         text={article.articleText}
-                        className="mt-2"
                       />
                       {related.relevanceNote && (
                         <p className="mt-3 text-sm text-foreground border-t pt-3">
