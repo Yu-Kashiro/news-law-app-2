@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { ArrowLeft, Search, X } from "lucide-react";
 import {
   SiteLogoIcon,
@@ -36,12 +37,54 @@ function DecorativeDots() {
 }
 
 export function Header() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   const [name, setName] = useQueryState("name", {
     defaultValue: "",
     shallow: false,
   });
   const [, setPage] = useQueryState("page");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [inputValue, setInputValue] = useState(name);
+
+  // トップページでURLの name が変わったら inputValue を同期
+  useEffect(() => {
+    setInputValue(name);
+  }, [name]);
+
+  const handleInputChange = (value: string) => {
+    setInputValue(value);
+    // トップページならリアルタイム検索
+    if (isHome) {
+      setPage(null);
+      setName(value, {
+        limitUrlUpdates: value === "" ? undefined : debounce(500),
+      });
+    }
+  };
+
+  const handleSubmit = () => {
+    if (isHome) {
+      setPage(null);
+      setName(inputValue);
+    } else {
+      // 他のページからはトップページに遷移して検索
+      if (inputValue) {
+        router.push(`/?name=${encodeURIComponent(inputValue)}`);
+      } else {
+        router.push("/");
+      }
+    }
+  };
+
+  const handleClear = () => {
+    setInputValue("");
+    if (isHome) {
+      setName("");
+    }
+  };
   return (
     <header className="relative sticky top-0 z-50 bg-background shadow-sm overflow-hidden">
       {/* 装飾ドット */}
@@ -74,21 +117,20 @@ export function Header() {
               <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 type="search"
-                value={name}
-                onChange={(e) => {
-                  setPage(null);
-                  setName(e.target.value, {
-                    limitUrlUpdates:
-                      e.target.value === "" ? undefined : debounce(500),
-                  });
+                value={inputValue}
+                onChange={(e) => handleInputChange(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+                    handleSubmit();
+                  }
                 }}
                 placeholder="ニュースを検索..."
                 className="rounded-full pl-9 pr-9"
               />
-              {name && (
+              {inputValue && (
                 <button
                   type="button"
-                  onClick={() => setName("")}
+                  onClick={handleClear}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
                   <X className="size-4" />
@@ -121,16 +163,11 @@ export function Header() {
                     <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
                       type="search"
-                      value={name}
-                      onChange={(e) => {
-                        setPage(null);
-                        setName(e.target.value, {
-                          limitUrlUpdates:
-                            e.target.value === "" ? undefined : debounce(500),
-                        });
-                      }}
+                      value={inputValue}
+                      onChange={(e) => handleInputChange(e.target.value)}
                       onKeyDown={(e) => {
-                        if (e.key === "Enter") {
+                        if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+                          handleSubmit();
                           setIsSearchOpen(false);
                         }
                       }}
@@ -138,10 +175,10 @@ export function Header() {
                       className="rounded-full pl-9 pr-9"
                       autoFocus
                     />
-                    {name && (
+                    {inputValue && (
                       <button
                         type="button"
-                        onClick={() => setName("")}
+                        onClick={handleClear}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                       >
                         <X className="size-4" />
