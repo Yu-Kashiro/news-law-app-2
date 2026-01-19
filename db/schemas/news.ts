@@ -16,7 +16,6 @@ export const newsItems = sqliteTable("news_items", {
   relatedLaws: text("related_laws", { mode: "json" }).$type<RelatedLaw[]>(),
   lawColumnTitle: text("law_column_title"),
   lawColumn: text("law_column"),
-  keywords: text("keywords", { mode: "json" }).$type<string[]>(),
   relatedArticles: text("related_articles", { mode: "json" }).$type<
     RelatedArticle[]
   >(),
