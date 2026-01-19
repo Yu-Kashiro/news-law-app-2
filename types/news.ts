@@ -5,7 +5,7 @@ export type NewsItem = typeof newsItems.$inferSelect;
 
 /** AI生成による法令情報のレスポンス型（Drizzle Schemaから派生） */
 export type LawsResponse = Required<
-  Pick<NewsItem, "laws" | "relatedLaws" | "lawColumnTitle" | "lawColumn">
+  Pick<NewsItem, "aiEstimatedLaws" | "relatedLaws" | "lawColumnTitle" | "lawColumn">
 >;
 
 /** RSSフィードから取得したアイテムの型 */

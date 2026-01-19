@@ -78,6 +78,13 @@
       "when": 1768811821920,
       "tag": "0010_military_goblin_queen",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1737331200000,
+      "tag": "0011_rename_laws_to_ai_estimated_laws",
+      "breakpoints": true
     }
   ]
 }
