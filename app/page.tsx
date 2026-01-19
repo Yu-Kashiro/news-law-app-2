@@ -67,7 +67,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
         </div>
       ) : (
         <>
-          <GridNews news={gridNews} lawsByName={lawsByName} />
+          <GridNews news={gridNews} lawsByName={lawsByName} searchQuery={name || undefined} />
           <NewsPagination
             currentPage={page}
             totalPages={totalPages}

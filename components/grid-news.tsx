@@ -1,17 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ImageOff } from "lucide-react";
+import { ImageOff, X } from "lucide-react";
 import type { NewsItem } from "@/types/news";
 import type { Law } from "@/types/laws";
 import { formatDateJa } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface GridNewsProps {
   news: NewsItem[];
   lawsByName: Map<string, Law>;
+  searchQuery?: string;
 }
 
-export function GridNews({ news, lawsByName }: GridNewsProps) {
+export function GridNews({ news, lawsByName, searchQuery }: GridNewsProps) {
   if (news.length === 0) {
     return null;
   }
@@ -20,10 +22,20 @@ export function GridNews({ news, lawsByName }: GridNewsProps) {
     <section className="bg-background py-8">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
-          <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-6 flex items-center gap-2">
-            <Image src="/25650_line.svg" alt="" width={24} height={24} />
-            最新ニュース
-          </p>
+          <div className="mb-6 flex items-center justify-between">
+            <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground flex items-center gap-2">
+              <Image src="/25650_line.svg" alt="" width={24} height={24} />
+              最新ニュース
+            </p>
+            {searchQuery && (
+              <Button variant="outline" size="sm" className="h-7 text-xs" asChild>
+                <Link href="/">
+                  <X className="h-3 w-3 mr-1" />
+                  検索をクリア
+                </Link>
+              </Button>
+            )}
+          </div>
           <div className="divide-y divide-border">
           {news.map((item) => {
             // この記事に関連する法令レコードを取得
