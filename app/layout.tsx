@@ -6,6 +6,11 @@ import { Footer } from "@/components/footer";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000"
+  ),
   title: "ニュースでまなぶ！日本のルール",
   description: "ニュースから日本の法律・ルールを学ぶサイト",
 };
