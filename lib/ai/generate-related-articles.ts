@@ -174,7 +174,6 @@ ${articleList}
         lawId,
         articleNum: articleNumForDb,
         articleText: article.article_text,
-        position: articleNumForDb,
       });
       articleId = newArticle.id;
     }

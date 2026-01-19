@@ -77,9 +77,8 @@
 |----------|-----|------|-------------|------|
 | `id` | text | ✓ | システム | nanoid で自動生成される主キー |
 | `lawId` | text | ✓ | システム | laws テーブルへの外部キー |
-| `articleNumber` | text | ✓ | **e-Gov API** | 条番号（例: 第1条） |
-| `articleTitle` | text | | **e-Gov API** | 条の見出し |
-| `articleContent` | text | ✓ | **e-Gov API** | 条文の本文 |
+| `articleNum` | text | ✓ | **e-Gov API** | 条番号（例: 第1条） |
+| `articleText` | text | ✓ | **e-Gov API** | 条文の本文 |
 | `createdAt` | timestamp_ms | ✓ | システム | レコード作成日時 |
 | `updatedAt` | timestamp_ms | ✓ | システム | レコード更新日時 |
 
