@@ -32,7 +32,7 @@ async function updateHasValidLaws() {
   let updatedFalse = 0;
 
   for (const news of allNews) {
-    const newsLaws = news.laws ?? [];
+    const newsLaws = news.aiEstimatedLaws ?? [];
 
     // ニュースの法令名のうち、DBに存在するものがあるか確認
     const hasValidLaws = newsLaws.some((lawName) => lawNamesSet.has(lawName));

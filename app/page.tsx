@@ -36,10 +36,10 @@ export default async function Home({ searchParams }: PageProps<"/">) {
   const gridNews = showTopNews ? news.slice(1) : news;
 
   // トップニュースの法令をDBから取得
-  const topNewsLaws = topNews?.laws ? await getLawsByNames(topNews.laws) : [];
+  const topNewsLaws = topNews?.aiEstimatedLaws ? await getLawsByNames(topNews.aiEstimatedLaws) : [];
 
   // グリッドニュースの法令を一括取得
-  const allGridLawNames = gridNews.flatMap((n) => n.laws ?? []);
+  const allGridLawNames = gridNews.flatMap((n) => n.aiEstimatedLaws ?? []);
   const allGridLaws =
     allGridLawNames.length > 0 ? await getLawsByNames(allGridLawNames) : [];
 

@@ -39,7 +39,7 @@ export function GridNews({ news, lawsByName, searchQuery }: GridNewsProps) {
           <div className="divide-y divide-border">
           {news.map((item) => {
             // この記事に関連する法令レコードを取得
-            const itemLaws = (item.laws ?? [])
+            const itemLaws = (item.aiEstimatedLaws ?? [])
               .map((name) => lawsByName.get(name))
               .filter((law): law is Law => law !== undefined);
 

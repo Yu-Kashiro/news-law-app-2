@@ -180,11 +180,11 @@ export async function GET(request: Request) {
         // 法令詳細を事前生成してDBに保存し、関連条文も取得
         let relatedArticles = null;
         let hasValidLaws = false;
-        if (lawsResponse.laws && lawsResponse.laws.length > 0) {
-          const result = await ensureLawsExist(lawsResponse.laws, {
+        if (lawsResponse.aiEstimatedLaws && lawsResponse.aiEstimatedLaws.length > 0) {
+          const result = await ensureLawsExist(lawsResponse.aiEstimatedLaws, {
             title: item.title,
             description: item.description,
-            keywords: lawsResponse.laws, // 法令名をキーワードとして使用
+            keywords: lawsResponse.aiEstimatedLaws, // 法令名をキーワードとして使用
           });
           relatedArticles =
             result.relatedArticles.length > 0 ? result.relatedArticles : null;
@@ -194,7 +194,7 @@ export async function GET(request: Request) {
         await db
           .update(newsItems)
           .set({
-            laws: lawsResponse.laws,
+            aiEstimatedLaws: lawsResponse.aiEstimatedLaws,
             relatedLaws: lawsResponse.relatedLaws,
             lawColumnTitle: lawsResponse.lawColumnTitle,
             lawColumn: lawsResponse.lawColumn,
