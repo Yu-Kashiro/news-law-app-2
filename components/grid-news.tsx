@@ -28,7 +28,7 @@ export function GridNews({ news, lawsByName, searchQuery }: GridNewsProps) {
               最新ニュース
             </p>
             {searchQuery && (
-              <Button variant="outline" size="sm" className="h-7 text-xs" asChild>
+              <Button variant="outline" size="sm" className="h-7 text-xs md:hidden" asChild>
                 <Link href="/">
                   <X className="h-3 w-3 mr-1" />
                   検索をクリア
