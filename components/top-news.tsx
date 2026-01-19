@@ -17,7 +17,7 @@ export function TopNews({ news, lawRecords }: TopNewsProps) {
   }
 
   return (
-    <section className="bg-background py-8">
+    <section className="py-8">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <article className="group relative">
           <Link href={`/news/${news.id}`} className="absolute inset-0 z-10" />

@@ -52,7 +52,7 @@ const navigation = [
 
 export function Footer() {
   return (
-    <footer className="relative bg-background overflow-hidden">
+    <footer className="relative overflow-hidden">
       {/* 装飾ドット */}
       <DecorativeDots />
       <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
