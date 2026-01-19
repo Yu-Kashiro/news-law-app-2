@@ -9,10 +9,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : "http://localhost:3000"
+      : "http://localhost:3000",
   ),
   title: "ニュースでまなぶ！日本のルール",
-  description: "ニュースから日本の法律・ルールを学ぶサイト",
+  description: "ニュースから日本の法律・ルールを学ぶサイトです。",
+  keywords: ["ニュースでまなぶ", "日本のルール", "法律", "ニュース"],
 };
 
 export default function RootLayout({
