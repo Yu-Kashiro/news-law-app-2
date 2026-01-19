@@ -85,6 +85,13 @@
       "when": 1737331200000,
       "tag": "0011_rename_laws_to_ai_estimated_laws",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "6",
+      "when": 1737331200001,
+      "tag": "0012_rename_related_laws_to_law_relevance_notes",
+      "breakpoints": true
     }
   ]
 }

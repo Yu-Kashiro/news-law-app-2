@@ -45,7 +45,7 @@ const lawsResponseSchema = z.object({
   aiEstimatedLaws: z
     .array(z.string())
     .describe("ニュース記事に関連する日本の法令名のリスト（正式名称）"),
-  relatedLaws: z
+  lawRelevanceNotes: z
     .array(relatedLawSchema)
     .describe("各法令とニュースの関連性の説明"),
   lawColumnTitle: z
@@ -77,7 +77,7 @@ ${description}
 
 【出力形式】
 - aiEstimatedLaws: 関連する法令名（正式名称）のリスト
-- relatedLaws: 各法令について、lawName（法令名）とrelevanceNote（なぜこのニュースと関係するのか50〜100文字で説明）のオブジェクト配列
+- lawRelevanceNotes: 各法令について、lawName（法令名）とrelevanceNote（なぜこのニュースと関係するのか50〜100文字で説明）のオブジェクト配列
 - lawColumnTitle: コラムタイトル
 - lawColumn: コラム本文`,
   });
