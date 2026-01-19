@@ -195,7 +195,7 @@ export async function GET(request: Request) {
           .update(newsItems)
           .set({
             aiEstimatedLaws: lawsResponse.aiEstimatedLaws,
-            relatedLaws: lawsResponse.relatedLaws,
+            lawRelevanceNotes: lawsResponse.lawRelevanceNotes,
             lawColumnTitle: lawsResponse.lawColumnTitle,
             lawColumn: lawsResponse.lawColumn,
             relatedArticles,

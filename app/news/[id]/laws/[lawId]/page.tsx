@@ -26,7 +26,7 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
   }
 
   // このニュースに関連する法令情報を取得
-  const relatedLaw = news.relatedLaws?.find((r) => r.lawName === law.name);
+  const lawRelevanceNote = news.lawRelevanceNotes?.find((r) => r.lawName === law.name);
 
   // このニュース・法令に関連する条文をフィルタリングしてソート
   const relatedArticles = (news.relatedArticles ?? [])
@@ -85,13 +85,13 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
           </div>
 
           {/* 関係する理由 */}
-          {relatedLaw?.relevanceNote && (
+          {lawRelevanceNote?.relevanceNote && (
             <section className="mb-8">
               <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-2">
                 このニュースとの関連
               </p>
               <p className="text-sm text-foreground">
-                {relatedLaw.relevanceNote}
+                {lawRelevanceNote.relevanceNote}
               </p>
             </section>
           )}

@@ -117,7 +117,7 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
               </h2>
               <div className="space-y-3">
                 {lawRecords.map((law) => {
-                  const relatedLaw = news.relatedLaws?.find(
+                  const lawRelevanceNote = news.lawRelevanceNotes?.find(
                     (r) => r.lawName === law.name
                   );
 
@@ -136,9 +136,9 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
                             {law.name}
                             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                           </span>
-                          {relatedLaw?.relevanceNote && (
+                          {lawRelevanceNote?.relevanceNote && (
                             <p className="mt-1 text-sm text-muted-foreground">
-                              {relatedLaw.relevanceNote}
+                              {lawRelevanceNote.relevanceNote}
                             </p>
                           )}
                         </CardContent>
