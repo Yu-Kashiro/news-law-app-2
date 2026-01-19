@@ -24,11 +24,6 @@ export const laws = sqliteTable("laws", {
   pros: text("pros", { mode: "json" }).$type<LawPoint[]>(),
   cons: text("cons", { mode: "json" }).$type<LawPoint[]>(),
 
-  // メタ情報
-  purpose: text("purpose"),
-  keyPoints: text("key_points", { mode: "json" }).$type<string[]>(),
-  relatedLaws: text("related_laws", { mode: "json" }).$type<string[]>(),
-
   createdAt: integer("created_at", { mode: "timestamp_ms" })
     .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
     .notNull(),
