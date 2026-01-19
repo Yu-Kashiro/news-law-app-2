@@ -62,7 +62,7 @@ export async function generateLawsForNews(
   description: string
 ): Promise<LawsResponse> {
   const { output } = await generateText({
-    model: gateway("google/gemini-2.5-flash-lite"),
+    model: gateway("google/gemini-2.5-flash"),
     output: Output.object({
       schema: lawsResponseSchema,
     }),
