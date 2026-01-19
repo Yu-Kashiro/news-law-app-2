@@ -11,8 +11,9 @@ export const metadata: Metadata = {
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : "http://localhost:3000",
   ),
-  title: "ニュースでまなぶ！日本のルール",
-  description: "ニュースから日本の法律・ルールを学ぶサイトです。",
+  title: "ニュースでまなぶ！日本のルール｜話題のニュースから法律をわかりやすく解説",
+  description:
+    "話題のニュースを通じて、日本の法律やルールをわかりやすく学べるサイトです。憲法・民法・刑法など、身近な法律知識を最新の出来事と一緒に理解しましょう。",
   keywords: ["ニュースでまなぶ", "日本のルール", "法律", "ニュース"],
 };
 
