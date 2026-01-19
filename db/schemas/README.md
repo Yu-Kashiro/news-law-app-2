@@ -17,7 +17,7 @@
 | `link` | text | ✓ | 外部RSS | 記事へのリンクURL |
 | `ogImage` | text | | 外部HTML | 記事ページから取得した OG 画像の URL |
 | `aiEstimatedLaws` | json (string[]) | | **AI推定** | 関連する法令名のリスト（e-Gov 未検証） |
-| `relatedLaws` | json (RelatedLaw[]) | | **AI推定** | 各法令とニュースの関連理由 |
+| `lawRelevanceNotes` | json (LawRelevanceNote[]) | | **AI推定** | 各法令とニュースの関連理由 |
 | `lawColumnTitle` | text | | **AI推定** | 法律コラムのタイトル |
 | `lawColumn` | text | | **AI推定** | 法律コラムの本文 |
 | `relatedArticles` | json (RelatedArticle[]) | | **AI推定** + API | ニュースに関連する条文（条文自体は e-Gov API から取得） |
@@ -36,7 +36,7 @@
 
 ### 注意事項
 
-- `aiEstimatedLaws` と `relatedLaws` は AI の出力をそのまま保存しており、存在しない法令名が含まれる可能性があります
+- `aiEstimatedLaws` と `lawRelevanceNotes` は AI の出力をそのまま保存しており、存在しない法令名が含まれる可能性があります
 - サイト表示時は `hasValidLaws = true` でフィルタされるため、有効な法令がない記事は表示されません
 - `ogImage` の URL は NHK サーバー上の画像を指しており、ユーザーのブラウザが直接 NHK から画像を取得します
 
@@ -92,7 +92,7 @@
 | **高** | e-Gov API | `laws.name`, `laws.eGovLawId`, `law_articles.*` |
 | **高** | 外部RSS/HTML | `news_items.title`, `news_items.link`, `news_items.ogImage` |
 | **中** | AI推定 + API検証 | `news_items.relatedArticles` |
-| **低** | AI推定（未検証） | `news_items.aiEstimatedLaws`, `news_items.relatedLaws`, `news_items.lawColumn` |
+| **低** | AI推定（未検証） | `news_items.aiEstimatedLaws`, `news_items.lawRelevanceNotes`, `news_items.lawColumn` |
 | **低** | AI生成 | `laws.summary`, `laws.background`, `laws.pros`, `laws.cons` |
 
 ### 重要
