@@ -6,7 +6,6 @@ import type { LawsResponse } from "@/types/news";
 import type { Law } from "@/types/laws";
 import { getLawByName, getLawsByNames, createLaw } from "@/data/laws";
 import { searchLawsByTitle } from "@/lib/law-tools/laws-api-client";
-import { generateLawDetail } from "@/lib/ai/generate-law-detail";
 import { findAndSaveRelatedArticles } from "@/lib/ai/generate-related-articles";
 import type { RelatedArticle } from "@/types/laws";
 
@@ -183,9 +182,6 @@ async function generateAndSaveLaw(lawName: string): Promise<Law | null> {
     ? `https://elaws.e-gov.go.jp/document?lawid=${eGovLawId}`
     : undefined;
 
-  // AI で解説を生成
-  const detail = await generateLawDetail(officialName, lawNum);
-
   // DBに保存
   const law = await createLaw({
     name: officialName,
@@ -193,10 +189,6 @@ async function generateAndSaveLaw(lawName: string): Promise<Law | null> {
     lawNum,
     promulgationDate,
     officialUrl,
-    summary: detail.summary,
-    background: detail.background,
-    pros: detail.pros,
-    cons: detail.cons,
   });
 
   return law;
