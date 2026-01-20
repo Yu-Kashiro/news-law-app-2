@@ -103,39 +103,45 @@ export async function ensureLawsExist(
   // 未登録の法令名を抽出
   const newLawNames = lawNames.filter((name) => !existingNames.has(name));
 
-  // 新規法令を生成
+  // 新規法令を並列生成
+  const newLawResults = await Promise.allSettled(
+    newLawNames.map((lawName) => generateAndSaveLaw(lawName))
+  );
+
   const newLaws: Law[] = [];
-  for (const lawName of newLawNames) {
-    try {
-      const law = await generateAndSaveLaw(lawName);
-      if (law) {
-        newLaws.push(law);
-      }
-    } catch (error) {
-      console.error(`Failed to generate law: ${lawName}`, error);
+  newLawResults.forEach((result, index) => {
+    if (result.status === "fulfilled" && result.value) {
+      newLaws.push(result.value);
+    } else if (result.status === "rejected") {
+      console.error(`Failed to generate law: ${newLawNames[index]}`, result.reason);
     }
-  }
+  });
 
   const allLaws = [...existingLaws, ...newLaws];
 
-  // 関連条文を取得（newsContextがある場合のみ）
+  // 関連条文を並列取得（newsContextがある場合のみ）
   const relatedArticles: RelatedArticle[] = [];
   if (newsContext) {
-    for (const law of allLaws) {
-      try {
-        const articles = await findAndSaveRelatedArticles({
+    const articleResults = await Promise.allSettled(
+      allLaws.map((law) =>
+        findAndSaveRelatedArticles({
           newsTitle: newsContext.title,
           newsDescription: newsContext.description,
           keywords: newsContext.keywords,
           lawId: law.id,
           lawName: law.name,
           eGovLawId: law.eGovLawId ?? undefined,
-        });
-        relatedArticles.push(...articles);
-      } catch (error) {
-        console.error(`Failed to find related articles for: ${law.name}`, error);
+        })
+      )
+    );
+
+    articleResults.forEach((result, index) => {
+      if (result.status === "fulfilled") {
+        relatedArticles.push(...result.value);
+      } else {
+        console.error(`Failed to find related articles for: ${allLaws[index].name}`, result.reason);
       }
-    }
+    });
   }
 
   // e-Gov APIで1件以上見つかった法令があるかどうか

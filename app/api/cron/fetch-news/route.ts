@@ -5,7 +5,7 @@ import { eq, inArray } from "drizzle-orm";
 import type { RssItem } from "@/types/news";
 import { generateLawsForNews, ensureLawsExist } from "@/lib/ai/generate-laws";
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 const NHK_RSS_URL = "https://www.nhk.or.jp/rss/news/cat0.xml";
 
@@ -161,17 +161,14 @@ export async function GET(request: Request) {
       insertedIds.push(...result.map((r) => r.id));
     }
 
-    // AI で法令情報を生成してDBを更新
-    // NOTE: 一括UPDATEではなく逐次UPDATEを採用している理由
-    // - AI API は外部依存で不安定になりやすく、途中でエラーやタイムアウトが発生する可能性がある
-    // - 逐次保存なら、失敗した記事以外のデータは既に保存済みとなり、データ損失を最小限に抑えられる
-    // - 一括保存だと、最後のUPDATE前にプロセスがクラッシュした場合、全データが消失するリスクがある
-    let lawsGenerated = 0;
-    for (const item of newItems) {
-      const insertedItem = insertedIds.shift();
-      if (!insertedItem) continue;
+    // AI で法令情報を生成してDBを更新（並列処理）
+    // NOTE: 各記事のDB更新は独立して即座に行われるため、
+    // 一部の記事でエラーが発生しても他の記事のデータは保存される
+    const lawGenerationResults = await Promise.allSettled(
+      newItems.map(async (item, index) => {
+        const insertedId = insertedIds[index];
+        if (!insertedId) return;
 
-      try {
         const lawsResponse = await generateLawsForNews(
           item.title,
           item.description
@@ -202,15 +199,24 @@ export async function GET(request: Request) {
             hasValidLaws,
             updatedAt: new Date(),
           })
-          .where(eq(newsItems.id, insertedItem));
-        lawsGenerated++;
-      } catch (error) {
+          .where(eq(newsItems.id, insertedId));
+      })
+    );
+
+    // 成功した件数をカウント
+    const lawsGenerated = lawGenerationResults.filter(
+      (r) => r.status === "fulfilled"
+    ).length;
+
+    // エラーログを出力
+    lawGenerationResults.forEach((result, index) => {
+      if (result.status === "rejected") {
         console.error(
-          `Failed to generate laws for article ${item.articleId}:`,
-          error
+          `Failed to generate laws for article ${newItems[index].articleId}:`,
+          result.reason
         );
       }
-    }
+    });
 
     return NextResponse.json({
       success: true,
