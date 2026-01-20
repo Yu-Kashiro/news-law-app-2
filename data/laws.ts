@@ -36,23 +36,8 @@ export async function getLawsByNames(names: string[]) {
     .where(inArray(laws.name, names));
 }
 
-/** 全法令を取得 */
-export async function getAllLaws() {
-  return await db.select().from(laws);
-}
-
 /** 法令を作成 */
 export async function createLaw(data: LawInsert) {
   const result = await db.insert(laws).values(data).returning();
   return result[0];
-}
-
-/** 法令を更新 */
-export async function updateLaw(id: string, data: Partial<LawInsert>) {
-  const result = await db
-    .update(laws)
-    .set(data)
-    .where(eq(laws.id, id))
-    .returning();
-  return result[0] ?? null;
 }
