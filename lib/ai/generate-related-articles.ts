@@ -113,7 +113,7 @@ export async function findAndSaveRelatedArticles(params: {
 
   // AIで関連条文を選択
   const { output } = await generateText({
-    model: gateway("google/gemini-2.5-flash"),
+    model: gateway("google/gemini-2.5-flash-lite"),
     output: Output.object({
       schema: selectArticlesSchema,
     }),
