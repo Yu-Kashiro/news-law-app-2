@@ -28,7 +28,7 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
   // このニュースに関連する法令情報を取得
   const lawRelevanceNote = news.lawRelevanceNotes?.find((r) => r.lawName === law.name);
 
-  // このニュース・法令に関連する条文をフィルタリングしてソート
+  // このニュース・法令に関連する条文をフィルタリングしてソート（同一条文の重複を除去）
   const relatedArticles = (news.relatedArticles ?? [])
     .filter((r) => r.lawId === lawId)
     .map((related) => {
@@ -38,6 +38,10 @@ export default async function NewsLawDetailPage({ params }: { params: Params }) 
     .filter(
       (item): item is { related: RelatedArticle; article: LawArticle } =>
         item !== null
+    )
+    .filter(
+      (item, index, self) =>
+        self.findIndex((t) => t.article.id === item.article.id) === index
     )
     .sort((a, b) => {
       const extractNum = (articleNum: string) => {
