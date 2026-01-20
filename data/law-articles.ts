@@ -31,10 +31,3 @@ export async function createArticle(
   const [article] = await db.insert(lawArticles).values(data).returning();
   return article;
 }
-
-/** 条文IDで条文を取得 */
-export async function getArticleById(id: string): Promise<LawArticle | undefined> {
-  return db.query.lawArticles.findFirst({
-    where: eq(lawArticles.id, id),
-  });
-}
