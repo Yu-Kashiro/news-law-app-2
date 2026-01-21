@@ -89,6 +89,9 @@ export function Footer() {
             </Link>
             . All rights reserved.
           </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            ニュース情報はNHKが提供するRSSフィードから取得しています。
+          </p>
         </div>
       </div>
     </footer>
