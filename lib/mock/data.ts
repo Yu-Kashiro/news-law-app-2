@@ -204,7 +204,7 @@ export const mockNewsItems: NewsItem[] = [
     description:
       "運転中のスマートフォン使用による事故が増加していることを受け、警察庁は反則金の引き上げを検討しています。",
     link: "https://example.com/news/3",
-    ogImage: "https://picsum.photos/seed/mock-news-3/800/450",
+    ogImage: "https://images.unsplash.com/photo-1520170350707-b2da59970118?w=800&h=450&fit=crop",
     aiEstimatedLaws: ["道路交通法"],
     lawRelevanceNotes: [
       {
