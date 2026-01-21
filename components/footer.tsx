@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { MockModeToggle } from "@/components/mock-mode-toggle"
+import { isMockMode } from "@/lib/mock/utils"
 
 function DecorativeDots() {
   return (
@@ -50,13 +52,16 @@ const navigation = [
   },
 ]
 
-export function Footer() {
+export async function Footer() {
+  const mockMode = await isMockMode()
+
   return (
     <footer className="relative overflow-hidden">
       {/* 装飾ドット */}
       <DecorativeDots />
       <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex items-center justify-center gap-x-6 md:order-2">
+          <MockModeToggle />
           <Link
             href="/credits"
             className="text-sm text-muted-foreground hover:text-foreground"
@@ -89,9 +94,11 @@ export function Footer() {
             </Link>
             . All rights reserved.
           </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            ニュース情報はNHKが提供するRSSフィードから取得しています。
-          </p>
+          {!mockMode && (
+            <p className="mt-1 text-xs text-muted-foreground">
+              ニュース情報はNHKが提供するRSSフィードから取得しています。
+            </p>
+          )}
         </div>
       </div>
     </footer>

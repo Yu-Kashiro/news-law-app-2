@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { MockModeBanner } from "@/components/mock-mode-banner";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className="wrap-anywhere relative flex min-h-screen flex-col bg-background">
+        <MockModeBanner />
         {/* Dashed Grid Background */}
         <div
           className="pointer-events-none absolute inset-0 z-0 min-h-full"

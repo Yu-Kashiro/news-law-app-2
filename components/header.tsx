@@ -10,6 +10,7 @@ import {
 } from "@/components/site-logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { MockModeToggle } from "@/components/mock-mode-toggle";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { debounce, useQueryState } from "nuqs";
 
