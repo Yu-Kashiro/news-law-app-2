@@ -2,12 +2,24 @@ import "server-only";
 import { db } from "@/db";
 import { newsItems } from "@/db/schemas/news";
 import { and, count, desc, eq, like, or } from "drizzle-orm";
+import { isMockMode } from "@/lib/mock/utils";
+import {
+  getMockNewsById,
+  getMockPaginatedNews,
+  getMockNewsCount,
+  searchMockNewsPaginated,
+  searchMockNewsCount,
+} from "@/lib/mock/queries";
 
 /** 1ページあたりの表示件数 */
 export const NEWS_PER_PAGE = 10;
 
 /** IDで記事を取得 */
 export async function getNewsById(id: string) {
+  if (await isMockMode()) {
+    return getMockNewsById(id);
+  }
+
   const news = await db
     .select()
     .from(newsItems)
@@ -19,6 +31,10 @@ export async function getNewsById(id: string) {
 
 /** ページネーション付きでニュースを取得 */
 export async function getPaginatedNews(page: number) {
+  if (await isMockMode()) {
+    return getMockPaginatedNews(page);
+  }
+
   const offset = (page - 1) * NEWS_PER_PAGE;
   return db
     .select()
@@ -31,6 +47,10 @@ export async function getPaginatedNews(page: number) {
 
 /** ニュースの総件数を取得 */
 export async function getNewsCount() {
+  if (await isMockMode()) {
+    return getMockNewsCount();
+  }
+
   const result = await db
     .select({ count: count() })
     .from(newsItems)
@@ -40,6 +60,10 @@ export async function getNewsCount() {
 
 /** ページネーション付きで検索 */
 export async function searchNewsPaginated(name: string, page: number) {
+  if (await isMockMode()) {
+    return searchMockNewsPaginated(name, page);
+  }
+
   const pattern = `%${name}%`;
   const offset = (page - 1) * NEWS_PER_PAGE;
   return db
@@ -62,6 +86,10 @@ export async function searchNewsPaginated(name: string, page: number) {
 
 /** 検索結果の総件数を取得 */
 export async function searchNewsCount(name: string) {
+  if (await isMockMode()) {
+    return searchMockNewsCount(name);
+  }
+
   const pattern = `%${name}%`;
   const result = await db
     .select({ count: count() })
