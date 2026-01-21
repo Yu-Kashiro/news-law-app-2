@@ -22,7 +22,7 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
   }
 
   return (
-    <div className="bg-background">
+    <div>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:max-w-4xl">
           <div className="pt-6 mb-8 flex items-center justify-between">
