@@ -143,8 +143,8 @@ export async function ensureLawsExist(
     });
   }
 
-  // e-Gov APIで1件以上見つかった法令があるかどうか
-  const hasValidLaws = allLaws.length > 0;
+  // 関連条文が1件以上存在するかどうか
+  const hasValidLaws = relatedArticles.length > 0;
 
   return { laws: allLaws, relatedArticles, hasValidLaws };
 }

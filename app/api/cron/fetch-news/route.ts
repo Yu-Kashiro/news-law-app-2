@@ -185,7 +185,7 @@ export async function GET(request: Request) {
           });
           relatedArticles =
             result.relatedArticles.length > 0 ? result.relatedArticles : null;
-          hasValidLaws = result.hasValidLaws;
+          hasValidLaws = result.relatedArticles.length > 0;
         }
 
         await db
