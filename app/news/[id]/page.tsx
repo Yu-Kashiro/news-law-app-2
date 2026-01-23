@@ -47,22 +47,22 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
           </div>
 
           <article className="flex flex-col gap-8 lg:flex-row">
-            <div className="relative aspect-video lg:w-80 lg:shrink-0 overflow-hidden rounded-2xl bg-muted">
+            <div className="lg:w-80 lg:shrink-0 overflow-hidden rounded-2xl">
               {news.ogImage ? (
                 <Image
                   alt={news.title}
                   src={news.ogImage}
-                  fill
-                  className="object-cover rounded-2xl"
+                  width={640}
+                  height={360}
+                  className="w-full h-auto rounded-2xl ring-1 ring-inset ring-border"
                   priority
                 />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="aspect-video bg-muted flex items-center justify-center rounded-2xl ring-1 ring-inset ring-border">
                   <ImageOff className="h-8 w-8 text-muted-foreground" />
                   <span className="sr-only">画像なし</span>
                 </div>
               )}
-              <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-border" />
             </div>
             <div>
               <div className="flex items-center gap-x-4 text-xs">
