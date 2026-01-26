@@ -35,8 +35,10 @@ export default async function Home({ searchParams }: PageProps<"/">) {
   const topNews = showTopNews ? (news[0] ?? null) : null;
   const gridNews = showTopNews ? news.slice(1) : news;
 
-  // トップニュースの法令をDBから取得
-  const topNewsLaws = topNews?.aiEstimatedLaws ? await getLawsByNames(topNews.aiEstimatedLaws) : [];
+  // トップニュースの法令をDBから取得（関連条文がある法令のみ）
+  const allTopNewsLaws = topNews?.aiEstimatedLaws ? await getLawsByNames(topNews.aiEstimatedLaws) : [];
+  const topNewsLawIdsWithArticles = new Set(topNews?.relatedArticles?.map(r => r.lawId) ?? []);
+  const topNewsLaws = allTopNewsLaws.filter(law => topNewsLawIdsWithArticles.has(law.id));
 
   // グリッドニュースの法令を一括取得
   const allGridLawNames = gridNews.flatMap((n) => n.aiEstimatedLaws ?? []);

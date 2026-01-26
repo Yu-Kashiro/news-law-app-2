@@ -15,7 +15,9 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
   const { id } = await params;
 
   const news = await getNewsById(id);
-  const lawRecords = news?.aiEstimatedLaws ? await getLawsByNames(news.aiEstimatedLaws) : [];
+  const allLawRecords = news?.aiEstimatedLaws ? await getLawsByNames(news.aiEstimatedLaws) : [];
+  const lawIdsWithArticles = new Set(news?.relatedArticles?.map(r => r.lawId) ?? []);
+  const lawRecords = allLawRecords.filter(law => lawIdsWithArticles.has(law.id));
 
   if (!news) {
     notFound();

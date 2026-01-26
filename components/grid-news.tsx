@@ -38,10 +38,11 @@ export function GridNews({ news, lawsByName, searchQuery }: GridNewsProps) {
           </div>
           <div className="divide-y divide-border">
           {news.map((item) => {
-            // この記事に関連する法令レコードを取得
+            // この記事に関連する法令レコードを取得（関連条文がある法令のみ）
+            const lawIdsWithArticles = new Set(item.relatedArticles?.map(r => r.lawId) ?? []);
             const itemLaws = (item.aiEstimatedLaws ?? [])
               .map((name) => lawsByName.get(name))
-              .filter((law): law is Law => law !== undefined);
+              .filter((law): law is Law => law !== undefined && lawIdsWithArticles.has(law.id));
 
             return (
             <article key={item.id} className="group relative py-4 first:pt-0">

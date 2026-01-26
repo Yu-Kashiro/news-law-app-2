@@ -12,7 +12,9 @@ function getCookieValue(name: string): boolean {
   return match?.[2] !== "false";
 }
 
-function subscribe(_callback: () => void) {
+function subscribe(callback: () => void) {
+  // useSyncExternalStoreに必要だが、Cookieの変更は監視しない
+  void callback;
   return () => {};
 }
 
