@@ -24,7 +24,11 @@ export function ArticleText({
   const textRef = useRef<HTMLDivElement>(null);
   // ResizeObserver内で最新のisExpanded値を参照するためのref
   const isExpandedRef = useRef(isExpanded);
-  isExpandedRef.current = isExpanded;
+
+  // refの更新はuseEffect内で行う（レンダー中の更新を避ける）
+  useEffect(() => {
+    isExpandedRef.current = isExpanded;
+  }, [isExpanded]);
 
   // テキストが切り詰められているかを検出（初回マウント時とテキスト変更時のみ）
   useEffect(() => {
