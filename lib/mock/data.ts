@@ -146,7 +146,8 @@ export const mockNewsItems: NewsItem[] = [
       {
         lawId: "mock-law-1",
         articleId: "mock-article-1-1",
-        relevanceNote: "法律の目的と個人の権利利益保護について",
+        relevanceNote:
+          "サイバー攻撃による顧客情報流出は、この条文が保護対象とする「個人の権利利益」の侵害に該当します",
       },
     ],
     hasValidLaws: true,
@@ -184,12 +185,14 @@ export const mockNewsItems: NewsItem[] = [
       {
         lawId: "mock-law-2",
         articleId: "mock-article-2-1",
-        relevanceNote: "労働時間の上限規定について",
+        relevanceNote:
+          "政府が見直しを検討している残業規制の基礎となる、法定労働時間（週40時間・1日8時間）を定めた条文です",
       },
       {
         lawId: "mock-law-2",
         articleId: "mock-article-2-2",
-        relevanceNote: "残業に対する割増賃金について",
+        relevanceNote:
+          "残業規制と密接に関連する割増賃金の支払義務を定めており、規制強化により企業の負担増加が見込まれます",
       },
     ],
     hasValidLaws: true,
@@ -227,7 +230,8 @@ export const mockNewsItems: NewsItem[] = [
       {
         lawId: "mock-law-3",
         articleId: "mock-article-3-1",
-        relevanceNote: "携帯電話使用等の禁止規定について",
+        relevanceNote:
+          "ながらスマホ運転を直接禁止する条文で、今回の反則金引き上げの対象となる違反行為を規定しています",
       },
     ],
     hasValidLaws: true,
@@ -267,7 +271,8 @@ export const mockNewsItems: NewsItem[] = [
       {
         lawId: "mock-law-4",
         articleId: "mock-article-4-1",
-        relevanceNote: "不法行為による損害賠償責任について",
+        relevanceNote:
+          "SNS上の誹謗中傷は他人の名誉権を侵害する不法行為に該当し、本条に基づき300万円の損害賠償が命じられました",
       },
     ],
     hasValidLaws: true,
@@ -305,7 +310,8 @@ EUのGDPRでは、自動化された意思決定（AIによる採否判断など
       {
         lawId: "mock-law-1",
         articleId: "mock-article-1-2",
-        relevanceNote: "個人情報の適正な取得について",
+        relevanceNote:
+          "AI採用システムが応募者の情報を不正な手段で取得・利用していないか、この条文の観点から問題視されています",
       },
     ],
     hasValidLaws: true,
@@ -350,7 +356,8 @@ EUのGDPRでは、自動化された意思決定（AIによる採否判断など
       {
         lawId: "mock-law-2",
         articleId: "mock-article-2-1",
-        relevanceNote: "法定労働時間の規定について",
+        relevanceNote:
+          "週休3日制を導入する際、この条文の週40時間規制を満たしつつ労働日を減らすための変形労働時間制が活用されます",
       },
     ],
     hasValidLaws: true,
@@ -397,7 +404,8 @@ EUのGDPRでは、自動化された意思決定（AIによる採否判断など
       {
         lawId: "mock-law-4",
         articleId: "mock-article-4-1",
-        relevanceNote: "不法行為責任の基本原則について",
+        relevanceNote:
+          "自動運転車の事故発生時、運転者・メーカー・システム開発者のうち誰が本条の不法行為責任を負うかが議論されています",
       },
     ],
     hasValidLaws: true,
@@ -441,7 +449,8 @@ EUのGDPRでは、自動化された意思決定（AIによる採否判断など
       {
         lawId: "mock-law-4",
         articleId: "mock-article-4-1",
-        relevanceNote: "不法行為による損害賠償について",
+        relevanceNote:
+          "偽ブランド品の販売は購入者の財産権を侵害する不法行為に該当し、被害者は本条に基づき損害賠償を請求できます",
       },
     ],
     hasValidLaws: true,
@@ -487,7 +496,8 @@ EUのGDPRでは、自動化された意思決定（AIによる採否判断など
       {
         lawId: "mock-law-2",
         articleId: "mock-article-2-1",
-        relevanceNote: "労働時間の管理と安全配慮義務について",
+        relevanceNote:
+          "テレワーク中の事故が労災認定されるには、この条文に基づく労働時間内の業務遂行中であったことが要件となります",
       },
     ],
     hasValidLaws: true,
@@ -530,7 +540,8 @@ EUの一般データ保護規則（GDPR）では、Cookieを含む個人デー�
       {
         lawId: "mock-law-1",
         articleId: "mock-article-1-1",
-        relevanceNote: "個人情報保護法の目的と適用範囲について",
+        relevanceNote:
+          "Cookieで収集される閲覧履歴等が個人情報に紐付けられる場合、この条文の保護対象となり同意取得が必要です",
       },
     ],
     hasValidLaws: true,
@@ -583,7 +594,8 @@ EUの一般データ保護規則（GDPR）では、Cookieを含む個人デー�
       {
         lawId: "mock-law-3",
         articleId: "mock-article-3-1",
-        relevanceNote: "運転中の注意義務について",
+        relevanceNote:
+          "電動キックボードも特定小型原動機付自転車として、この条文の携帯電話使用禁止等の運転中注意義務が適用されます",
       },
     ],
     hasValidLaws: true,
@@ -631,12 +643,14 @@ EUの一般データ保護規則（GDPR）では、Cookieを含む個人デー�
       {
         lawId: "mock-law-2",
         articleId: "mock-article-2-1",
-        relevanceNote: "法定労働時間と時間外労働について",
+        relevanceNote:
+          "副業を行う場合、本業と副業の労働時間がこの条文に基づき通算され、週40時間を超えると時間外労働となります",
       },
       {
         lawId: "mock-law-2",
         articleId: "mock-article-2-2",
-        relevanceNote: "割増賃金の計算について",
+        relevanceNote:
+          "副業により通算労働時間が法定を超えた場合、後から契約した事業主がこの条文に基づく割増賃金を支払う義務を負います",
       },
     ],
     hasValidLaws: true,
@@ -680,7 +694,8 @@ EUの一般データ保護規則（GDPR）では、Cookieを含む個人デー�
       {
         lawId: "mock-law-4",
         articleId: "mock-article-4-2",
-        relevanceNote: "法律行為の有効性について",
+        relevanceNote:
+          "配偶者居住権の設定は法律行為であり、この条文の公序良俗に反しない限り有効に成立します",
       },
     ],
     hasValidLaws: true,
@@ -732,7 +747,8 @@ EUの一般データ保護規則（GDPR）では、Cookieを含む個人デー�
       {
         lawId: "mock-law-3",
         articleId: "mock-article-3-1",
-        relevanceNote: "運転者の義務規定について",
+        relevanceNote:
+          "飲酒検問で取り締まる飲酒運転は、この条文と同様に運転者の注意義務違反として重い罰則が科されます",
       },
     ],
     hasValidLaws: true,
@@ -779,12 +795,14 @@ EUの一般データ保護規則（GDPR）では、Cookieを含む個人デー�
       {
         lawId: "mock-law-1",
         articleId: "mock-article-1-1",
-        relevanceNote: "個人情報保護の基本理念について",
+        relevanceNote:
+          "マイナンバーを含む個人情報の利活用拡大は、この条文が定める個人の権利利益保護とのバランスが議論されています",
       },
       {
         lawId: "mock-law-1",
         articleId: "mock-article-1-2",
-        relevanceNote: "個人情報の適正取得について",
+        relevanceNote:
+          "マイナンバーの取得・利用には厳格なルールがあり、この条文の不正取得禁止に加え番号法による規制も適用されます",
       },
     ],
     hasValidLaws: true,
