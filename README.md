@@ -7,7 +7,6 @@
 - **フレームワーク**: Next.js 16 (App Router) / React 19
 - **スタイリング**: Tailwind CSS v4 / shadcn/ui
 - **データベース**: Drizzle ORM / LibSQL
-- **認証**: better-auth
 - **AI**: Vercel AI SDK
 
 ## セットアップ
