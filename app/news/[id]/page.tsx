@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ExternalLink, ImageOff } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { getNewsById } from "@/data/news";
 import { getLawsByNames } from "@/data/laws";
 import { formatDateJa } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CurveDivider } from "@/components/wave-divider";
+import { NewsImage } from "@/components/news-image";
 
 type Params = Promise<{ id: string }>;
 
@@ -49,22 +50,16 @@ export default async function NewsDetailPage({ params }: { params: Params }) {
           </div>
 
           <article className="flex flex-col gap-8 lg:flex-row">
-            <div className="lg:w-80 lg:shrink-0 overflow-hidden rounded-2xl">
-              {news.ogImage ? (
-                <Image
-                  alt={news.title}
-                  src={news.ogImage}
-                  width={640}
-                  height={360}
-                  className="w-full h-auto rounded-2xl ring-1 ring-inset ring-border"
-                  priority
-                />
-              ) : (
-                <div className="aspect-video bg-muted flex items-center justify-center rounded-2xl ring-1 ring-inset ring-border">
-                  <ImageOff className="h-8 w-8 text-muted-foreground" />
-                  <span className="sr-only">画像なし</span>
-                </div>
-              )}
+            <div className="lg:w-80 lg:shrink-0 overflow-hidden rounded-2xl ring-1 ring-inset ring-border bg-muted aspect-video">
+              <NewsImage
+                src={news.ogImage}
+                alt={news.title}
+                width={640}
+                height={360}
+                className="w-full h-auto rounded-2xl"
+                priority
+                fallbackIconSize="md"
+              />
             </div>
             <div>
               <div className="flex items-center gap-x-4 text-xs">

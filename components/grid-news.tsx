@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ImageOff, X } from "lucide-react";
+import { X } from "lucide-react";
 import type { NewsItem } from "@/types/news";
 import type { Law } from "@/types/laws";
 import { formatDateJa } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { NewsImage } from "@/components/news-image";
 
 interface GridNewsProps {
   news: NewsItem[];
@@ -77,19 +78,13 @@ export function GridNews({ news, lawsByName, searchQuery }: GridNewsProps) {
                   )}
                 </div>
                 <div className="relative w-24 h-16 shrink-0 overflow-hidden rounded bg-muted">
-                  {item.ogImage ? (
-                    <Image
-                      alt={item.title}
-                      src={item.ogImage}
-                      fill
-                      className="object-contain transition-all duration-300 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <ImageOff className="h-5 w-5 text-muted-foreground" />
-                      <span className="sr-only">画像なし</span>
-                    </div>
-                  )}
+                  <NewsImage
+                    src={item.ogImage}
+                    alt={item.title}
+                    fill
+                    className="object-contain transition-all duration-300 group-hover:scale-105"
+                    fallbackIconSize="sm"
+                  />
                 </div>
               </div>
             </article>
