@@ -6,10 +6,10 @@ import { Label } from "@/components/ui/label";
 import { MOCK_MODE_COOKIE } from "@/lib/mock/constants";
 
 function getCookieValue(name: string): boolean {
-  if (typeof document === "undefined") return true;
+  if (typeof document === "undefined") return false;
   const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
-  // Cookie未設定の場合はデフォルトでモックモード
-  return match?.[2] !== "false";
+  // Cookie未設定の場合はデフォルトでモックモード無効
+  return match?.[2] === "true";
 }
 
 function subscribe(callback: () => void) {

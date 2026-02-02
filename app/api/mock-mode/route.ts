@@ -4,8 +4,8 @@ import { MOCK_MODE_COOKIE } from "@/lib/mock/constants";
 
 export async function GET() {
   const cookieStore = await cookies();
-  // Cookie未設定の場合はデフォルトでモックモード
-  const isMockMode = cookieStore.get(MOCK_MODE_COOKIE)?.value !== "false";
+  // Cookie未設定の場合はデフォルトでモックモード無効
+  const isMockMode = cookieStore.get(MOCK_MODE_COOKIE)?.value === "true";
   return NextResponse.json({ enabled: isMockMode });
 }
 
