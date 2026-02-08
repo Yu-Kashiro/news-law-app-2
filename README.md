@@ -1,6 +1,6 @@
 # ニュースでまなぶ！日本のルール
 
-NHKのニュース記事を取得し、AIが関連する日本の法律を推定・解説する教育Webアプリケーション
+ニュース記事を取得し、AIが関連する日本の法律を推定・解説する教育Webアプリケーション
 
 ## 技術スタック
 
@@ -55,101 +55,20 @@ zod/          # Zodスキーマ
 | e-Gov 法令API | 法律の公式情報・条文取得 | REST API |
 | Turso | データ永続化 | LibSQL (サーバーレス SQLite) |
 
-## アーキテクチャ
-
-### 全体構成
-
-```mermaid
-graph TB
-    subgraph Client["クライアント（ブラウザ）"]
-        Browser["React 19 + Tailwind CSS v4 + shadcn/ui"]
-    end
-
-    subgraph NextJS["Next.js 16 App Router on Vercel"]
-        subgraph Pages["ページ（Server Components）"]
-            Home["/ トップページ<br/>ニュース一覧・検索"]
-            NewsDetail["/news/[id]<br/>記事詳細・法律コラム"]
-            LawDetail["/news/[id]/laws/[lawId]<br/>法律詳細・条文一覧"]
-        end
-
-        subgraph API["API Routes"]
-            Cron["/api/cron/fetch-news<br/>Cronジョブ"]
-            MockAPI["/api/mock-mode<br/>モックモード切替"]
-        end
-
-        subgraph DataLayer["データアクセス層（server-only）"]
-            NewsData["data/news.ts"]
-            LawsData["data/laws.ts"]
-            ArticlesData["data/law-articles.ts"]
-        end
-
-        subgraph ORM["ORM / スキーマ層"]
-            Drizzle["Drizzle ORM"]
-            Schemas["db/schemas/<br/>news | laws | law_articles | auth"]
-            Types["types/ + zod/<br/>型定義・バリデーション"]
-        end
-
-        subgraph Lib["外部サービス連携層"]
-            AILib["lib/ai/<br/>generate-laws.ts"]
-            LawTools["lib/law-tools/<br/>laws-api-client.ts"]
-            Auth["lib/auth.ts<br/>better-auth"]
-        end
-
-        MockMode["lib/mock/<br/>モックデータ"]
-    end
-
-    subgraph External["外部サービス"]
-        NHK["NHK NEWS WEB<br/>RSS フィード"]
-        Gemini["Google Gemini 2.5 Flash<br/>Vercel AI SDK"]
-        EGov["e-Gov 法令API<br/>法律情報・条文"]
-        Turso["Turso<br/>LibSQL / サーバーレス SQLite"]
-    end
-
-    Browser -->|ページリクエスト| Pages
-    Browser -->|API呼び出し| API
-
-    Pages --> DataLayer
-    API --> DataLayer
-    DataLayer -->|通常モード| ORM
-    DataLayer -.->|モックモード| MockMode
-
-    Cron --> AILib
-    Cron --> LawTools
-    Cron --> NHK
-
-    AILib --> Gemini
-    LawTools --> EGov
-    Auth --> Turso
-
-    ORM --> Drizzle
-    Drizzle --> Turso
-    Types -.-> Schemas
-
-    classDef external fill:#e8f4f8,stroke:#2196F3,stroke-width:2px
-    classDef page fill:#fff3e0,stroke:#FF9800,stroke-width:2px
-    classDef data fill:#e8f5e9,stroke:#4CAF50,stroke-width:2px
-    classDef api fill:#fce4ec,stroke:#E91E63,stroke-width:2px
-
-    class NHK,Gemini,EGov,Turso external
-    class Home,NewsDetail,LawDetail page
-    class NewsData,LawsData,ArticlesData,Drizzle data
-    class Cron,MockAPI api
-```
-
-### データフロー（ニュース取得パイプライン）
+## データフロー（ニュース取得パイプライン）
 
 ```mermaid
 sequenceDiagram
     participant Cron as Cronジョブ
-    participant NHK as NHK NEWS WEB
+    participant NEWS as NEWS
     participant DB as Turso DB
     participant AI as Gemini 2.5 Flash
     participant EGov as e-Gov 法令API
 
     Note over Cron,EGov: ニュース取得パイプライン
 
-    Cron->>NHK: RSS フィード取得
-    NHK-->>Cron: 記事一覧（タイトル・概要・リンク）
+    Cron->>NEWS: RSS フィード取得
+    NEWS-->>Cron: 記事一覧（タイトル・概要・リンク）
     Cron->>Cron: OG画像抽出・記事パース
     Cron->>DB: 新規記事を保存
 
