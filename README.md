@@ -6,14 +6,10 @@ NHKのニュース記事を取得し、AIが関連する日本の法律を推定
 
 | レイヤー | 技術 |
 |---------|------|
-| フロントエンド | Next.js 16 (App Router) / React 19 / Tailwind CSS v4 / shadcn/ui |
-| バックエンド | Next.js API Routes (サーバーレス) |
+| フレームワーク | Next.js 16 (App Router) / React 19 / Tailwind CSS v4 / shadcn/ui |
 | ORM | Drizzle ORM |
 | データベース | Turso (LibSQL / サーバーレス SQLite) |
-| 認証 | better-auth |
 | AI | Vercel AI SDK + Google Gemini 2.5 Flash |
-| バリデーション | Zod v4 / React Hook Form |
-| デプロイ | Vercel |
 
 ## セットアップ
 
@@ -55,7 +51,6 @@ zod/          # Zodスキーマ
 
 | サービス | 役割 | 接続方式 |
 |---------|------|---------|
-| NHK NEWS WEB | ニュースソース | RSS フィード取得 |
 | Google Gemini 2.5 Flash | 法律推定・コラム生成 | Vercel AI SDK |
 | e-Gov 法令API | 法律の公式情報・条文取得 | REST API |
 | Turso | データ永続化 | LibSQL (サーバーレス SQLite) |
@@ -169,68 +164,4 @@ sequenceDiagram
             Cron->>DB: 法律・条文を保存
         end
     end
-```
-
-### ER図（データベース）
-
-```mermaid
-erDiagram
-    news_items {
-        string id PK
-        string articleId UK
-        string title
-        string description
-        string link
-        string ogImage
-        json aiEstimatedLaws
-        json lawRelevanceNotes
-        string lawColumnTitle
-        string lawColumn
-        json relatedArticles
-        boolean hasValidLaws
-        datetime publishedAt
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    laws {
-        string id PK
-        string name UK
-        string eGovLawId
-        string lawNum
-        string promulgationDate
-        string officialUrl
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    law_articles {
-        string id PK
-        string lawId FK
-        string articleNum
-        string articleText
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    users {
-        string id PK
-        string name
-        string email UK
-        boolean emailVerified
-        string image
-    }
-
-    sessions {
-        string id PK
-        string userId FK
-        string token UK
-        datetime expiresAt
-        string ipAddress
-        string userAgent
-    }
-
-    laws ||--o{ law_articles : "has"
-    users ||--o{ sessions : "has"
-    news_items }o--o{ laws : "references (via JSON)"
 ```
